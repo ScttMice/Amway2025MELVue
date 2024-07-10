@@ -31,8 +31,9 @@
 
 <script lang="ts" setup name="index">
 import { ref, reactive } from "vue";
+import { useRouter } from 'vue-router'
   let color = ref('red')
-
+  const router = useRouter()
   let form = reactive({
     phone:'',
     phoneCode:''
@@ -42,6 +43,7 @@ import { ref, reactive } from "vue";
     console.log(form);
     loading.value = true
     setTimeout(() => {
+      router.push({name:'Person'})
       loading.value = false
     },2000)
   }
