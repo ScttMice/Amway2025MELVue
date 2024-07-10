@@ -1,4 +1,4 @@
-import {RouteRecordRaw } from 'vue-router'
+import { RouteRecordRaw } from 'vue-router'
 
 export const routes:RouteRecordRaw[] = [
   {
@@ -14,6 +14,15 @@ export const routes:RouteRecordRaw[] = [
     meta: {
       title: '',
       keepAlive: true,
+    },
+  },
+  {
+    name: 'person',
+    path: '/person',
+    component: () => import('@/views/person/index.vue'),
+    meta: {
+      title: '',
+      keepAlive: false,
     },
   },
   // 匹配不到重定向会主页
