@@ -1,21 +1,29 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'Home',
-    component: () => import(/* webpackChunkName: "home" */ '@/views/index.vue')
-  },
-  {
-    path: '/person',
-    name: 'Person',
-    component: () => import(/* webpackChunkName: "person" */ '@/views/person.vue')
-  },
-]
+import { createRouter, createWebHistory,type RouteLocationNormalized } from 'vue-router'
+import NProgress from "@/utils/progress";
+import routes from './routes';
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from) {
+    return { top: 0 };
+  },
 })
+
+export interface toRouteType extends RouteLocationNormalized {
+  meta: {
+    title?: string;
+    noCache?: boolean;
+  };
+}
+
+router.beforeEach((to: toRouteType, from, next) => {
+  NProgress.start();
+  next();
+});
+
+router.afterEach(() => {
+  NProgress.done();
+});
 
 export default router

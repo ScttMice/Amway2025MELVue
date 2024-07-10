@@ -21,7 +21,7 @@
     
       </van-cell-group>
       <div style="margin: 16px;">
-        <van-button square block color="#05917F" loading-type="circular" loading-size="24px" loading-text="发送验证码" :loading="loading" native-type="submit">
+        <van-button square block type="primary"  loading-type="circular" loading-size="24px" loading-text="发送验证码" :loading="loading" native-type="submit">
           发送验证码
         </van-button>
       </div>
