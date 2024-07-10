@@ -6,16 +6,18 @@
     <strong class="title1">澳大利亚签证办理</strong>
     <p class="title2">安利2025墨尔本专案</p>
     <van-form @submit="onSubmit">
-      <van-cell-group inset>
-        <van-field v-model="form.phone" name="手机号" placeholder="手机号" right-icon="phone-o"
-          :rules="[{ required: true, message: '请填写手机号' }]">
+      <div class=" mg-r-l-16 text-left">
+        <label class="mg-b16" style="display: inline-block;">手机号码</label>
+        <van-field class="border-bottom1" style="padding:0 0 8px 0;" border v-model="form.phone" name="手机号"
+          placeholder="手机号" right-icon="phone-o" :rules="[{ required: true, message: '请填写手机号' }]">
           <template #label>
-            <van-field v-model="form.phoneCode" input-align="top" placeholder="+ 86" right-icon="arrow-down" />
+            <van-field class="pd0" :label="form.phoneCode + '+'" v-model="form.phoneCode" input-align="top"
+              right-icon="arrow-down" />
           </template>
         </van-field>
+      </div>
 
-      </van-cell-group>
-      <div style="margin: 16px;">
+      <div style="margin-top:28px;" class="mg16">
         <van-button square block type="primary" loading-type="circular" loading-size="24px" loading-text="发送验证码"
           :loading="loading" native-type="submit">
           发送验证码
@@ -23,6 +25,8 @@
       </div>
     </van-form>
 
+
+    <van-picker title="标题" :columns="columns" @confirm="onConfirm" @cancel="onCancel" @change="onChange" />
   </div>
 </template>
 
@@ -30,16 +34,33 @@
 import router from '@/router';
 import { reactive, ref } from 'vue';
 import { useToggle } from '@vant/use';
+import { PickerConfirmEventParams, showToast } from 'vant';
 // import { useUserStore } from '@/store/modules/user';
 
 // const userStore = useUserStore();
 let form = reactive({
   phone: '',
-  phoneCode: ''
+  phoneCode: '18'
 })
 const ruleForm = ref<any>(null);
 
 const [loading, loadingToggle] = useToggle();
+
+const columns = [
+  { text: '杭州', value: 'Hangzhou' },
+  { text: '宁波', value: 'Ningbo' },
+  { text: '温州', value: 'Wenzhou' },
+  { text: '绍兴', value: 'Shaoxing' },
+  { text: '湖州', value: 'Huzhou' },
+];
+
+const onConfirm = ({ selectedValues }: PickerConfirmEventParams) => {
+  showToast(`当前值: ${selectedValues.join(',')}`);
+};
+const onChange = ({ selectedValues }: PickerConfirmEventParams) => {
+  showToast(`当前值: ${selectedValues.join(',')}`);
+};
+const onCancel = () => showToast('取消');
 
 const onSubmit = () => {
   loadingToggle(true)
