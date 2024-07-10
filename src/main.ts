@@ -5,10 +5,12 @@ import './assets/css/base.css'
 import './assets/css/main.less'
 import BaseDirective from './directive'
 import { createPinia } from 'pinia'
+import './components/index'
 // import 'vant/lib/index.css';
 import 'vant/es/dialog/style';
 import 'vant/es/toast/style';
 import 'lib-flexible/flexible.js'
+
 
 // import 'vant/es/nav-bar/style';  // 使用了 tsx 
 

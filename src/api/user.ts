@@ -1,5 +1,11 @@
 import { http } from './index';
 
+
+export type LoginData = {
+  phone: string,
+  phoneCode: number | string
+}
+
 /**
  * 账号密码登录
  * @returns UseAxiosReturn
