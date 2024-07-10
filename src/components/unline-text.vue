@@ -21,6 +21,13 @@ const props = withDefaults(defineProps<Props>(), {
 
 </script>
 
+<script lang="ts">
+export default {
+	name: 'unlineText'
+}
+</script>
+
+
 <style lang="less" scoped>
 .unline-text {
 	display: inline-block;
