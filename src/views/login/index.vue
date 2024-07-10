@@ -53,6 +53,8 @@
         @confirm="onConfirm" @cancel="showPickerToggle(false)">
       </van-picker>
     </van-popup>
+
+    <check-code v-model:show="showCode"></check-code>
   </div>
 </template>
 
@@ -63,10 +65,11 @@ import { FormInstance, PickerConfirmEventParams, PickerOption } from 'vant';
 import country from "@/json/country.json";
 import { type LoginData } from "@/api/user";
 import validate from "@/utils/ys-validate";
+
 // import { useUserStore } from '@/store/modules/user';
 
-// const userStore = useUserStore();
-type LoginForm = {
+// const userStore = useUserStore(); 
+export type LoginForm = {
   phoneCode: number[]
 } & Omit<LoginData, 'phoneCode'>
 
@@ -74,9 +77,10 @@ const loginForm = ref<FormInstance>();
 
 const [loading, loadingToggle] = useToggle();
 const [showPicker, showPickerToggle] = useToggle(false);
+const [showCode, showCodeToggle] = useToggle(false);
 
 const form = reactive<LoginForm>({
-  phone: '',
+  phone: '15313213213',
   phoneCode: [86]
 })
 
@@ -103,7 +107,8 @@ const onSubmit = async () => {
   } finally {
     setTimeout(() => {
       loadingToggle(false)
-    }, 3000)
+      showCodeToggle(true)
+    }, 2000)
     // loadingToggle(false)
   }
 

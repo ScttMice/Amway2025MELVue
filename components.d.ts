@@ -9,7 +9,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Button: typeof import('./src/components/button.vue')['default']
+    CheckCode: typeof import('./src/components/check-code.vue')['default']
+    copy: typeof import('./src/components/unline-text copy.vue')['default']
     Headers: typeof import('./src/components/headers.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -17,9 +18,11 @@ declare module '@vue/runtime-core' {
     VanButton: typeof import('vant/es')['Button']
     VanConfigProvider: typeof import('vant/es')['ConfigProvider']
     VanDivider: typeof import('vant/es')['Divider']
-    VanDialog: typeof import('vant/es')['Dialog']
     VanField: typeof import('vant/es')['Field']
     VanForm: typeof import('vant/es')['Form']
+    VanNavBar: typeof import('vant/es')['NavBar']
+    VanNumberKeyboard: typeof import('vant/es')['NumberKeyboard']
+    VanPasswordInput: typeof import('vant/es')['PasswordInput']
     VanPicker: typeof import('vant/es')['Picker']
     VanPopup: typeof import('vant/es')['Popup']
   }
