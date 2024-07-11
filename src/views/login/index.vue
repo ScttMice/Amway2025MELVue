@@ -9,7 +9,7 @@
     <p class="title2">安利2025墨尔本专案</p>
 
     <van-form @submit="onSubmit" ref="loginForm">
-      <div class="form-item mg-r-l-16 text-left">
+      <div class="form-item mg-r-l-24 text-left">
         <label class="mg-b16 font14 color-rgb94" style="display: inline-block;">手机号码</label>
         <van-field class="border-bottom1" type="tel" style="padding:0 0 8px 0;" border v-model="form.phone" name="手机号"
           placeholder="手机号" right-icon="phone-o"
@@ -21,15 +21,15 @@
         </van-field>
       </div>
 
-      <div style="margin-top:28px;" class="mg16">
+      <div style="margin-top:28px;" class="mg24">
         <van-button square block type="primary" loading-type="circular" loading-size="24px" loading-text="发送验证码"
-          :loading="loading" native-type="submit">
-          发送验证码
+          :disabled="disabled" :loading="loading" native-type="submit">
+          {{ time > 0 ? time + 'S 重新发送' : '发送验证码' }}
         </van-button>
       </div>
     </van-form>
 
-    <div class="login-tips mg-r-l-16 ">
+    <div class="login-tips mg-r-l-24 ">
       <div class="login-tips-item flex">
         <label>开放时间：</label>
         <p>2024年9月30日至12月30日</p>
@@ -54,7 +54,8 @@
       </van-picker>
     </van-popup>
 
-    <check-code v-model:show="showCode"></check-code>
+    <check-code v-model:show="showCode" v-model:time="time" :phoneCode="form.phoneCode[0]"
+      :phone="form.phone"></check-code>
   </div>
 </template>
 
@@ -84,6 +85,8 @@ const form = reactive<LoginForm>({
   phoneCode: [86]
 })
 
+let time = ref<number>(0);
+
 const columns: PickerOption[] = country.map(item => ({
   ...item,
   text: item.name + ' + ' + item.id
@@ -91,6 +94,7 @@ const columns: PickerOption[] = country.map(item => ({
 
 
 const activeCode = computed(() => '+ ' + form.phoneCode[0]);
+const disabled = computed(() => time.value > 0);
 
 const validator = () => validate.isAllPhone(form.phone, form.phoneCode[0]);
 
@@ -108,7 +112,7 @@ const onSubmit = async () => {
     setTimeout(() => {
       loadingToggle(false)
       showCodeToggle(true)
-    }, 2000)
+    }, 1000)
     // loadingToggle(false)
   }
 
