@@ -22,8 +22,8 @@
       </div>
 
       <div style="margin-top:28px;" class="mg24">
-        <van-button square block type="primary" loading-type="circular" loading-size="24px" loading-text="发送验证码"
-          :disabled="disabled" :loading="loading" native-type="submit">
+        <van-button block type="primary" loading-type="circular" loading-text="发送验证码" :disabled="disabled"
+          :loading="loading" native-type="submit">
           {{ time > 0 ? time + 'S 重新发送' : '发送验证码' }}
         </van-button>
       </div>
