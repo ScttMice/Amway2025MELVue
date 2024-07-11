@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     UnlineText: typeof import('./src/components/unline-text.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanConfigProvider: typeof import('vant/es')['ConfigProvider']
+    VanCountDown: typeof import('vant/es')['CountDown']
     VanDivider: typeof import('vant/es')['Divider']
     VanField: typeof import('vant/es')['Field']
     VanForm: typeof import('vant/es')['Form']
