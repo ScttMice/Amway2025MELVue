@@ -28,12 +28,11 @@
 		</div>
 
 		<div class="mg16" style="margin-top: 0;">
-			<van-button square block type="primary" :disabled="disabled" loading-type="circular" loading-size="24px"
-				:loading="loginLoading" loading-text="登录" @click="login">
+			<van-button block type="primary" :disabled="disabled" loading-type="circular" :loading="loginLoading"
+				loading-text="登录" @click="login">
 				登录
 			</van-button>
 		</div>
-
 
 	</van-popup>
 </template>
@@ -42,6 +41,7 @@
 import { computed, ref } from 'vue';
 import { useToggle } from '@vant/use';
 import { type LoginData } from "@/api/user";
+import { useRouter } from "vue-router";
 import { closeToast, CountDownInstance, showLoadingToast } from 'vant';
 
 export interface Props extends LoginData {
@@ -59,6 +59,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['update:show', 'update:time'])
 
+const router = useRouter();
+
 const countDownRef = ref<CountDownInstance>();
 
 const [loginLoading, loginLoadingToggle] = useToggle(false)
@@ -66,7 +68,7 @@ const [showKeyboard, showKeyToggle] = useToggle(false)
 const [isFinish, setIsFinish] = useToggle(false)
 
 const checkCode = ref<string | undefined>();
-let time = ref<number>(5 * 1000);
+let time = ref<number>(60 * 1000);
 
 const disabled = computed(() => checkCode.value?.length !== 6)
 
@@ -83,6 +85,9 @@ const login = () => {
 	} finally {
 		setTimeout(() => {
 			loginLoadingToggle(false)
+			router.push({
+				name: 'auth'
+			});
 		}, 1000)
 	}
 }

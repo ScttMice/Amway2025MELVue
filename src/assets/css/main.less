@@ -9,6 +9,43 @@ input {
   line-height: 26px;
 }
 
+.page {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: auto;
+
+  &-header {
+    width: 100%;
+
+    .van-nav-bar__content {
+      background-color: var(--theme-color);
+
+      .van-nav-bar__title {
+        color: #fff !important;
+      }
+
+      .van-icon {
+        color: #fff !important;
+      }
+    }
+  }
+
+  &-body {
+    padding: 24px;
+    // height: 100%;
+  }
+
+  &-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+  }
+
+}
+
 .underline-text {
   text-decoration-line: underline;
   // text-decoration-color: red;
@@ -21,7 +58,7 @@ input {
 }
 
 .border-bottom1 {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #EEEEEE;
 }
 
 

@@ -22,8 +22,8 @@
       </div>
 
       <div style="margin-top:28px;" class="mg24">
-        <van-button square block type="primary" loading-type="circular" loading-size="24px" loading-text="发送验证码"
-          :disabled="disabled" :loading="loading" native-type="submit">
+        <van-button block type="primary" loading-type="circular" loading-text="发送验证码" :disabled="disabled"
+          :loading="loading" native-type="submit">
           {{ time > 0 ? time + 'S 重新发送' : '发送验证码' }}
         </van-button>
       </div>
@@ -152,11 +152,5 @@ const onSubmit = async () => {
     font-size: 20px;
     margin: 30px 0 70px;
   }
-
-  /deep/ .van-button {
-    border-radius: 6px;
-    font-size: 18px;
-  }
-
 }
 </style>
