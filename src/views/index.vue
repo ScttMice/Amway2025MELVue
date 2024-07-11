@@ -65,7 +65,7 @@ import { useRouter } from 'vue-router'
     font-size: 20px;
     margin: 30px 0 70px;
   }
-  /deep/ .van-button {
+  :deep(.van-button) {
     border-radius: 6px;
     font-size: 18px;
   }

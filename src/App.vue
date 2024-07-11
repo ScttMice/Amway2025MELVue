@@ -8,7 +8,6 @@
       </router-view>
     </van-config-provider>
   </div>
-  
 </template>
 
 <script lang="ts">
