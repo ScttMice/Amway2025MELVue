@@ -128,7 +128,7 @@ const handleSend = () => {
 
 	}
 
-	/deep/ .van-password-input__security li {
+	:deep(.van-password-input__security li) {
 		border: 1px solid #5E5E5E;
 		border-radius: 8px;
 		height: 55px;

@@ -203,5 +203,9 @@ h1, h2, h3, h4, h5, h6 {
 	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 }
-
+/* 必填 */
+.require_start::after {
+	content: ' *';
+	color: #FF0000;
+}
 /*end*/
