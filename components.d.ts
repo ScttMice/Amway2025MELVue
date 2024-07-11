@@ -9,8 +9,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Button: typeof import('./src/components/button.vue')['default']
     CheckCode: typeof import('./src/components/check-code.vue')['default']
-    copy: typeof import('./src/components/unline-text copy.vue')['default']
     Headers: typeof import('./src/components/headers.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
