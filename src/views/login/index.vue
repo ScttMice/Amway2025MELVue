@@ -149,7 +149,7 @@ const onSubmit = async () => {
     margin: 30px 0 70px;
   }
 
-  /deep/ .van-button {
+  :deep(.van-button) {
     border-radius: 6px;
     font-size: 18px;
   }

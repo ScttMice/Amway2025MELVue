@@ -1,5 +1,5 @@
 <template>
-    <van-button :type="type" class="btn_size" :style="{ width,height}" :loading="loading" :color="color" @click="clickSub">
+    <van-button :type="type" class="btn_size" :style="{ width,height}" :loading="loading" :loading-text="title" :color="color" @click="clickSub">
         <template #icon>
             <img v-if="status == 1" src="../assets/image/back.png" alt="">
             <img v-if="status == 2" src="../assets/image/add.png" alt="">
@@ -43,7 +43,7 @@
                 default: '',
             },
             type: {
-                type: String,
+                type: String as any,
                 default: 'primary',
             },
             status: {
@@ -59,11 +59,11 @@
    
    <style scoped lang="less">
         .btn_size {
-            /deep/ .van-button__text {
+            :deep(.van-button__text) {
                 font-size: 18px;
                 line-height: 1;
             }
-            /deep/ .van-button__icon {
+            :deep(.van-button__icon) {
                 line-height: 0.8;
             }
         }
