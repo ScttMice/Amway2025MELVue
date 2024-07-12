@@ -27,8 +27,17 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     name: 'uploadCertificate',
-    path: '/upload-certificate',
+    path: '/upload-certificate/:id',
     component: () => import('@/views/upload-certificate/index.vue'),
+    meta: {
+      title: '',
+      keepAlive: true,
+    },
+  },
+  {
+    name: 'pdfView',
+    path: '/pdf-view/:pdf_name/:pdf_url',
+    component: () => import('@/views/pdf-view/index.vue'),
     meta: {
       title: '',
       keepAlive: true,
