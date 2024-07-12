@@ -19,10 +19,17 @@
                     </div>
                 </div>
                 <div class="flex flex-column">
-                    <span class="font14 mg-b10" style="color: rgb(1, 145, 255);">{{ item.pdfName }}</span>
-                    <van-button style="height: 30px;width: 85px;" :color="buttonColor(item.status)" @click="onUpload">
-                        <span class="font14">{{ buttonText(item.status) }}</span>
-                    </van-button>
+                    <span @click="toViewPdf(item.pdfUrl, item.pdfName)" class="font14 mg-b10"
+                        style="color: rgb(1, 145, 255);">{{
+                            item.pdfName }}</span>
+                    <div class="text-right">
+                        <van-uploader :readonly="item.status === 1" :before-read="beforeRead"
+                            :after-read="(items, detail) => afterRead(items, detail, item)">
+                            <van-button style="height: 30px;width: 85px;" :color="buttonColor(item.status)">
+                                <span class="font14">{{ buttonText(item.status) }}</span>
+                            </van-button>
+                        </van-uploader>
+                    </div>
                 </div>
             </div>
 
@@ -53,18 +60,24 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed } from "vue";
-import { useRouter } from "vue-router";
+import { ref, reactive, computed, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useToggle } from '@vant/use';
+import { showLoadingToast, showToast } from "vant";
+import { UploaderBeforeRead, UploaderFileListItem } from "vant/lib/uploader/types";
+import { Numeric } from "vant/lib/utils";
 
 export interface UploadList {
     title: string;
     required: boolean,
-    pdfName: string,
-    status: number
+    pdfUrl?: string,
+    pdfName?: string,
+    status: number,
 }
 
 const router = useRouter();
+const route = useRoute();
+
 const [show, showToggle] = useToggle(false);
 let activeItem = ref<UploadList>();
 
@@ -73,48 +86,56 @@ const uploadList = ref<UploadList[]>([
         title: '护照整本扫描件',
         required: false,
         pdfName: '213413513.pdf',
-        status: 1
+        pdfUrl: '213413513.pdf',
+        status: 1,
     },
     {
         title: '旧护照整本扫描件',
         required: false,
         pdfName: '213413513.pdf',
+        pdfUrl: '213413513.pdf',
         status: 0
     },
     {
         title: '身份证彩色扫描件',
         required: true,
         pdfName: '213413513.pdf',
+        pdfUrl: '213413513.pdf',
         status: 0
     },
     {
         title: '户口本整本彩色扫描件',
         required: true,
         pdfName: '213413513.pdf',
+        pdfUrl: '213413513.pdf',
         status: 0
     },
     {
         title: '财力证明',
         required: false,
         pdfName: '213413513.pdf',
+        pdfUrl: '213413513.pdf',
         status: 0
     },
     {
         title: '关系证明',
         required: false,
         pdfName: '213413513.pdf',
+        pdfUrl: '213413513.pdf',
         status: 0
     },
     {
         title: '在职证明彩色扫描件',
         required: false,
         pdfName: '213413513.pdf',
+        pdfUrl: '213413513.pdf',
         status: 0
     },
     {
         title: '营业执照彩色扫描件',
         required: false,
         pdfName: '213413513.pdf',
+        pdfUrl: '213413513.pdf',
         status: 0
     },
 ])
@@ -155,6 +176,52 @@ const buttonText = computed(() => {
 })
 
 
+onMounted(() => {
+    console.log(route.params)
+})
+
+// 拦截
+const beforeRead: UploaderBeforeRead = (file) => {
+    const _file = file as File;
+    console.log(file);
+
+    const canUpType: string[] = ['application/pdf'];
+
+    if (!canUpType.includes(_file.type)) {
+        showToast('请上传pdf格式文件');
+        return false;
+    }
+    return true;
+};
+
+type AfterRead = (items: UploaderFileListItem | UploaderFileListItem[], detail: {
+    name: Numeric;
+    index: number;
+}, upItem: UploadList) => void
+
+
+const afterRead: AfterRead = (items, detail, upItem) => {
+    console.log(items, detail, upItem);
+    const loadingToast = showLoadingToast({
+        message: '上传中',
+        forbidClick: true
+    })
+    try {
+        // upItem.pdfName = (items as UploaderFileListItem).file?.name;
+    } catch (error) {
+
+    } finally {
+        setTimeout(() => {
+            loadingToast.close();
+            upItem.pdfName = (items as UploaderFileListItem).file?.name;
+            upItem.pdfUrl = (items as UploaderFileListItem).objectUrl;
+            showToast('上传成功 ');
+        }, 1000)
+    }
+}
+
+
+
 const onBack = () => router.back();
 
 const onViewTips = (item: UploadList) => {
@@ -162,9 +229,18 @@ const onViewTips = (item: UploadList) => {
 
     showToggle(true)
 }
-const onUpload = () => {
 
+const toViewPdf = (url: UploadList['pdfUrl'], name: UploadList['pdfName']): void => {
+    if (!url) return;
+    router.push({
+        name: "pdfView",
+        params: {
+            pdf_url: url,
+            pdf_name: name
+        }
+    })
 }
+
 </script>
 
 <style scoped lang="less">
@@ -194,4 +270,4 @@ const onUpload = () => {
         height: calc(100% - 54px);
     }
 }
-</style>
+</style>, UploaderFileListItem
