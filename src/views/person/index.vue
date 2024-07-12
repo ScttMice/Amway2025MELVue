@@ -36,15 +36,18 @@
         </template>
       </div>
       <div class="hint_title">说明</div>
-      <div class="btn flex align-middle space-between">
+      <div class="btn flex align-middle space-between" style="background-color: #fff;">
         <m-button :status="1" height="48px" color="#6D7278" width="175px" @close="back" title="退出" />
         <m-button :status="2" height="48px" title="添加" @close="addClick" width="175px" />
       </div>
+
+
+
       <!-- 退出 -->
       <van-dialog v-model:show="backShow" className="dia_close" :showConfirmButton="false" :showCancelButton="false">
 
         <div class="txt">确认退出当前账号？</div>
-        <div class="flex align-middle space-between" style="margin: 24px;">
+        <div class="flex align-middle space-between" style="margin: 24px">
           <m-button height="48px" width="120px" @close="confirm" title="确认" />
           <m-button height="48px" title="返回" type="default" width="120px" @click="showToggle(false)" />
         </div>
