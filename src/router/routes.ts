@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from 'vue-router'
 
-export const routes:RouteRecordRaw[] = [
+export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
@@ -11,6 +11,24 @@ export const routes:RouteRecordRaw[] = [
     name: 'login',
     path: '/login',
     component: () => import('@/views/login/index.vue'),
+    meta: {
+      title: '',
+      keepAlive: true,
+    },
+  },
+  {
+    name: 'auth',
+    path: '/auth',
+    component: () => import('@/views/info-auth/index.vue'),
+    meta: {
+      title: '',
+      keepAlive: true,
+    },
+  },
+  {
+    name: 'uploadCertificate',
+    path: '/upload-certificate',
+    component: () => import('@/views/upload-certificate/index.vue'),
     meta: {
       title: '',
       keepAlive: true,
