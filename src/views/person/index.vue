@@ -44,6 +44,7 @@
             :showConfirmButton="false"
             :showCancelButton="false"
             >
+            
             <div class="txt">确认退出当前账号？</div>
             <div class="flex align-middle space-between" style="margin: 24px;">
               <m-button height="48px" width="120px" @close="confirm" title="确认"/>
