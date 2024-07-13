@@ -40,9 +40,6 @@
         <m-button :status="1" height="48px" color="#6D7278" width="175px" @close="back" title="退出" />
         <m-button :status="2" height="48px" title="添加" @close="addClick" width="175px" />
       </div>
-
-
-
       <!-- 退出 -->
       <van-dialog v-model:show="backShow" className="dia_close" :showConfirmButton="false" :showCancelButton="false">
 
@@ -112,6 +109,7 @@ const back = () => {
 // 确认退出
 const confirm = () => {
   showToggle(false)
+  router.push({name:'login'})
 }
 // 新增人员
 let addPerson = ref()

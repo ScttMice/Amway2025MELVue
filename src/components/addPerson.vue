@@ -28,19 +28,19 @@
                 <div class="form-item mg_item text-left">
                     <label class="mg-b16 font14 color-rgb94 require_start" style="display: inline-block;">类型</label>
                     <van-field class="border-bottom1" readonly style="padding:0 0 8px 0;" border v-model="typeValue" name="类型"
-                    placeholder="类型" @click="typePickerToggle(true)" :rules="[{ required: true, message: '请选择类型' }]">
+                    placeholder="类型" @click="typePickerToggle(true)" :rules="[{ required: true, message: '请选择类型' }]" right-icon="arrow-down">
                     </van-field>
                 </div>
                 <div class="form-item mg_item text-left">
                     <label class="mg-b16 font14 color-rgb94 require_start" style="display: inline-block;">出生日期</label>
                     <van-field class="border-bottom1" readonly style="padding:0 0 8px 0;" border v-model="form.tr2" name="出生日期"
-                    placeholder="出生日期" @click="datePickerToggle(true)" :rules="[{ required: true, message: '请选择出生日期' }]">
+                    placeholder="出生日期" @click="datePickerToggle(true)" :rules="[{ required: true, message: '请选择出生日期' }]" right-icon="arrow-down">
                     </van-field>
                 </div>
                 <div class="form-item mg_item text-left">
                     <label class="mg-b16 font14 color-rgb94 require_start" style="display: inline-block;">签证办理</label>
                     <van-field class="border-bottom1" readonly style="padding:0 0 8px 0;" border v-model="visaValue" name="签证办理"
-                    placeholder="签证办理" @click="visaPickerToggle(true)" :rules="[{ required: true, message: '请选择签证办理方式' }]">
+                    placeholder="签证办理" @click="visaPickerToggle(true)" :rules="[{ required: true, message: '请选择签证办理方式' }]" right-icon="arrow-down">
                     </van-field>
                 </div>
             </van-form>
