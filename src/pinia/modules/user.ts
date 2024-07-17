@@ -1,19 +1,18 @@
-import { loginPassword } from '@/api/user';
-import { useCookies } from '@vueuse/integrations/useCookies';
+// import { loginPassword } from '@/api/user';
 import { defineStore } from 'pinia';
 
-const { VITE_TOKEN_KEY } = import.meta.env;
-const token = useCookies().get(VITE_TOKEN_KEY as string);
+// const { VITE_TOKEN_KEY } = import.meta.env;
+// const token = useCookies().get(VITE_TOKEN_KEY as string);
 
 interface StoreUser {
-  token: string;
+  token?: string;
   info: Record<any, any>;
 }
 
 export const useUserStore = defineStore({
   id: 'app-user',
   state: (): StoreUser => ({
-    token: token,
+    // token: token,
     info: {},
   }),
   getters: {
@@ -26,17 +25,17 @@ export const useUserStore = defineStore({
       this.info = info ? info : '';
     },
     login() {
-      return new Promise((resolve) => {
-        loginPassword().then((res) => {
-          this.setInfo(res);
-          resolve(res);
-        });
-      });
+      // return new Promise((resolve) => {
+      //   loginPassword().then((res) => {
+      //     this.setInfo(res);
+      //     resolve(res);
+      //   });
+      // });
     },
   },
-  persist: {
-    key: 'token',
-    storage: localStorage,
-    paths: ['token'],
-  },
+  // persist: {
+  //   key: 'token',
+  //   storage: localStorage,
+  //   paths: ['token'],
+  // },
 });

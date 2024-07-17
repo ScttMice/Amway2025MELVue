@@ -15,7 +15,7 @@
             <van-form ref="diaFormRef" >
                 <div class="form-item mg_item text-left">
                     <label class="mg-b16 font14 color-rgb94 require_start" style="display: inline-block;">安利卡号</label>
-                    <van-field class="border-bottom1" style="padding:0 0 8px 0;" border v-model="form.card" name="卡号"
+                    <van-field class="border-bottom1" style="padding:0 0 8px 0;" border v-model="form.turn" name="卡号"
                     placeholder="安利卡号" :rules="[{ required: true, message: '请填写卡号' }]">
                     </van-field>
                 </div>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-item mg_item text-left">
                     <label class="mg-b16 font14 color-rgb94 require_start" style="display: inline-block;">出生日期</label>
-                    <van-field class="border-bottom1" readonly style="padding:0 0 8px 0;" border v-model="form.tr2" name="出生日期"
+                    <van-field class="border-bottom1" readonly style="padding:0 0 8px 0;" border v-model="form.birth" name="出生日期"
                     placeholder="出生日期" @click="datePickerToggle(true)" :rules="[{ required: true, message: '请选择出生日期' }]" right-icon="arrow-down">
                     </van-field>
                 </div>
@@ -94,21 +94,15 @@
    import { ref,defineAsyncComponent, reactive } from "vue";
    import { useToggle } from '@vant/use';
    import { FormInstance,PickerConfirmEventParams ,PickerColumn, PickerOption } from 'vant';
+   import { type person, addPerson } from "@/api/user";
    const MButton = defineAsyncComponent(() => import('@/components/button.vue'));
     const emit = defineEmits(['refresh']);
-    interface formDate {
-        card: String
-        name: String,
-        tr1: Number,
-        tr2: String,
-        tr3: Number
-    }
-    const form = reactive<formDate>({
-        card:'',
+    const form = reactive<person>({
+        turn:'',
         name:'',
-        tr1:0,
-        tr2:'',
-        tr3:0
+        corpType:0,
+        birth:'',
+        visas:0
     })
     const typeValue = ref('') //类型
     const columns2:(PickerOption | PickerColumn)[] = [
@@ -118,7 +112,7 @@
     // 点击确定
     const onConfirm2 = ( item:any ) => {
         typeValue.value = item.selectedOptions[0].text
-        form.tr1 = item.selectedValues[0] as number
+        form.corpType = item.selectedValues[0] as number
         typePickerToggle(false)
     };
     const visaValue = ref('') //签证办理方式
@@ -130,13 +124,13 @@
     // 点击确定
     const onConfirm = ( item:any ) => {
         visaValue.value = item.selectedOptions[0].text
-        form.tr3 = item.selectedValues[0] as number
+        form.visas = item.selectedValues[0] as number
         visaPickerToggle(false)
     };
     const minDate =  new Date(1900, 0, 1)
     const currentDate = ref(['2000', '01', '01']);
     const onConfirm3 = ( { selectedValues }:PickerConfirmEventParams ) => {
-        form.tr2 = selectedValues.join('/')
+        form.birth = selectedValues.join('/')
         datePickerToggle(false)
     }
     const [show, showToggle] = useToggle(false);
@@ -154,7 +148,6 @@
     const addClick = async () => {
         try {
             await diaFormRef.value?.validate();
-            console.log(form);
             backShowToggle(true)
         } catch(error) {
             console.log(error);
@@ -164,19 +157,20 @@
     const confirm = () => {
         backShowToggle(false)
         loadToggle(true)
-        setTimeout(() => {
-            loadToggle(false)
-            showToggle(false)
-            emit('refresh');
-            closeDialog()
-        },2000)
+        addPerson(form).then(res => {
+            if(res.code == 0) {
+                showToggle(false)
+                emit('refresh');
+                closeDialog()
+            }
+        }).finally(() => loadToggle(false))
     }
     const closeDialog = () => {
-        form.card = ''
+        form.turn = ''
         form.name = ''
-        form.tr1 = 0
-        form.tr2 = ''
-        form.tr3 = 0
+        form.corpType = 0
+        form.birth = ''
+        form.visas = 0
         typeValue.value = ''
         visaValue.value = ''
     }

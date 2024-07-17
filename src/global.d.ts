@@ -16,3 +16,10 @@ declare module '@vant/area-data' {
   export declare function useCascaderAreaData(): CascaderOption[];
   export {};
 }
+// 申明 数组
+declare type EmptyArrayType<T = any> = T[];
+
+// 申明 对象
+declare type EmptyObjectType<T = any> = {
+	[key: string]: T;
+};

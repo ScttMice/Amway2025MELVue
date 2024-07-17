@@ -1,7 +1,7 @@
 <template>
 	<van-popup v-model:show="props.show" @open="onOpen" position="right" class="check-code-pop text-left">
 		<div class="header">
-			<van-nav-bar left-arrow :border="false" @click-left="emit('update:show', false)"
+			<van-nav-bar left-arrow :border="false" @click-left="backShow"
 				style="background-color: initial;">
 			</van-nav-bar>
 		</div>
@@ -11,12 +11,12 @@
 
 			<div class="tips font14 mg-b24">
 				<p class="color-rgb94" style="line-height: 20px;"> 验证码已发送至</p>
-				<p style="line-height: 20px;">+ {{ props.phoneCode }} {{ props.phone }}</p>
+				<p style="line-height: 20px;">+ {{ props.countryCode }} {{ props.phone }}</p>
 			</div>
 
-			<van-password-input :mask="false" :length="6" gutter="10px" style="margin: 0;" :value="checkCode"
+			<van-password-input :mask="false" :length="4" gutter="20px" style="margin: 0;" :value="checkCode"
 				:focused="showKeyboard" @focus="showKeyToggle(true)" />
-			<van-number-keyboard :maxlength="6" v-model="checkCode" :show="showKeyboard" @blur="showKeyToggle(false)" />
+			<van-number-keyboard :maxlength="4" v-model="checkCode" :show="showKeyboard" @blur="showKeyToggle(false)" />
 
 			<p class="font14 color-rgb94" style="margin-top: 32px;">
 				<template v-if="!isFinish"> <van-count-down @change="onCountDownChange" ref="countDownRef"
@@ -41,9 +41,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useToggle } from '@vant/use';
-import { type LoginData } from "@/api/user";
+import { type LoginData,loginPhone,loginPassword } from "@/api/user";
 import { useRouter } from "vue-router";
 import { closeToast, CountDownInstance, showLoadingToast } from 'vant';
+import { showToast } from 'vant';
+import { setLocalStorage } from '@/utils/storage'
 
 export interface Props extends LoginData {
 	size?: string
@@ -55,7 +57,7 @@ export interface Props extends LoginData {
 const props = withDefaults(defineProps<Props>(), {
 	size: '16px',
 	color: '#000000',
-	phoneCode: 86
+	countryCode: 86
 })
 
 const emit = defineEmits(['update:show', 'update:time'])
@@ -71,7 +73,7 @@ const [isFinish, setIsFinish] = useToggle(false)
 const checkCode = ref<string | undefined>();
 let time = ref<number>(60 * 1000);
 
-const disabled = computed(() => checkCode.value?.length !== 6)
+const disabled = computed(() => checkCode.value?.length !== 4)
 
 const onOpen = () => {
 	countDownRef.value?.start();
@@ -82,14 +84,29 @@ const login = () => {
 	console.log(time.value);
 	loginLoadingToggle(true)
 	try {
-
+		let data = {
+			countryCode: props.countryCode,
+			phone: props.phone,
+			code:checkCode.value
+			}
+			loginPhone(data).then(res => {
+			if(res.code == 0) {
+				if(res.tr16 == 1) {
+					router.push({
+						name: 'auth'
+					});
+				}else {
+					router.push({
+						name: 'person'
+					});
+				}
+				setLocalStorage('anliMelToken',res.data.accessToken)
+			}else {
+				showToast(res.message);
+			}
+		})
 	} finally {
-		setTimeout(() => {
-			loginLoadingToggle(false)
-			router.push({
-				name: 'auth'
-			});
-		}, 1000)
+		loginLoadingToggle(false)
 	}
 }
 
@@ -97,6 +114,11 @@ const onCountDownChange = (currentTime: Record<string, any>) => {
 	const { seconds } = currentTime;
 	emit('update:time', seconds);
 }
+// 返回输入电话页面
+const backShow = () => {
+	emit('update:show', false)
+	checkCode.value = ''
+} 
 
 const handleSend = () => {
 	// time.value = 60 * 1000;
@@ -107,7 +129,17 @@ const handleSend = () => {
 	});
 
 	try {
-
+		let data = {
+			countryCode: props.countryCode,
+			phone: props.phone
+			}
+			loginPassword(data).then(res => {
+			if(res.code == 0) {
+				showToast('发送成功');
+			}else {
+				showToast(res.message);
+			}
+		})
 	} finally {
 		setTimeout(() => {
 			setIsFinish(false)

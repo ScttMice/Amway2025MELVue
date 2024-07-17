@@ -25,23 +25,28 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
-
+import { putStatement } from "@/api/user";
+import { showToast } from 'vant';
 const router = useRouter();
-const soll = ref<number>(0);
+// const soll = ref<number>(0);
 const checked = ref<boolean>(false);
-
 
 const onScroll = (e: Event) => {
     console.log(e);
 }
 
-
 const toNext = () => {
-    router.push({
-        name: 'person'
-    })
+    putStatement().then(res => {
+        if(res.code == 0) {
+            router.push({
+                name: 'person'
+            })
+        }else {
+            showToast(res.message)
+        }
+    }) 
 }
 </script>
 

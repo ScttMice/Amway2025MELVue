@@ -22,7 +22,7 @@ import * as PDFJS from 'pdfjs-dist'
 import * as PdfWorker from 'pdfjs-dist/build/pdf.worker.mjs?url'
 import { showLoadingToast, showToast } from 'vant';
 import { windowWidth } from 'vant/lib/utils';
-import { nextTick, ref, Ref, reactive, onMounted } from 'vue'
+import { nextTick, ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from "vue-router";
 
 const route = useRoute();
@@ -124,28 +124,28 @@ const renderPage = (num: any, _pdfDoc?: any) => {
         }
     })
 }
-function lastPage() {
-    if (state.pageNum > 1) {
-        renderPage(state.pageNum - 1);
-    }
-}
-function nextPage() {
-    if (state.pageNum < state.numPages) {
-        renderPage(state.pageNum + 1);
-    }
-}
-function pageZoomOut() {
-    if (pdfScale.value < 5) {
-        pdfScale.value += 0.1;
-        renderPage(state.pageNum);
-    }
-}
-function pageZoomIn() {
-    if (pdfScale.value > 0.5) {
-        pdfScale.value -= 0.1;
-        renderPage(state.pageNum);
-    }
-}
+// function lastPage() {
+//     if (state.pageNum > 1) {
+//         renderPage(state.pageNum - 1);
+//     }
+// }
+// function nextPage() {
+//     if (state.pageNum < state.numPages) {
+//         renderPage(state.pageNum + 1);
+//     }
+// }
+// function pageZoomOut() {
+//     if (pdfScale.value < 5) {
+//         pdfScale.value += 0.1;
+//         renderPage(state.pageNum);
+//     }
+// }
+// function pageZoomIn() {
+//     if (pdfScale.value > 0.5) {
+//         pdfScale.value -= 0.1;
+//         renderPage(state.pageNum);
+//     }
+// }
 
 const onBack = () => router.back();
 

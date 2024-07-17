@@ -52,7 +52,7 @@ const auPhoneReg = /^[0-9]{8,}$/
 const emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 const pwdReg = /^.{6,16}$/
 const inviteCodeReg = /^[a-zA-Z0-9]{6,16}$/
-const enReg = /^[a-zA-Z0-9]+$/
+// const enReg = /^[a-zA-Z0-9]+$/
 const enReg2 = /[\u4e00-\u9fa5]/
 export default {
 	isAllPhone: function (val: string, countrycode: number) {

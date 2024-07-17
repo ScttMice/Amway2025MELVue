@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <div class="page-header">
-            <van-nav-bar left-arrow placeholder fixed title="李小丽" :border="false" @click-left="onBack" />
+            <van-nav-bar left-arrow placeholder fixed :title="visaTitle" :border="false" @click-left="onBack" />
         </div>
 
         <div class="page-body" style="padding-bottom: 130px;">
@@ -19,12 +19,12 @@
                     </div>
                 </div>
                 <div class="flex flex-column">
-                    <span @click="toViewPdf(item.pdfUrl, item.pdfName)" class="font14 mg-b10"
+                    <span @click="toViewPdf(item.fileUrl, item.fileName)" class="font14 mg-b10"
                         style="color: rgb(1, 145, 255);">{{
-                            item.pdfName }}</span>
+                            item.fileName }}</span>
                     <div class="text-right">
-                        <van-uploader :readonly="item.status === 1" :before-read="beforeRead"
-                            :after-read="(items, detail) => afterRead(items, detail, item)">
+                        <van-uploader :readonly="item.status === 1" :before-read="(e) => beforeRead(e,item.type)"
+                            :after-read="(items, detail) => afterRead(items, detail, item)" accept=".pdf">
                             <van-button style="height: 30px;width: 85px;" :color="buttonColor(item.status)">
                                 <span class="font14">{{ buttonText(item.status) }}</span>
                             </van-button>
@@ -36,12 +36,10 @@
         </div>
 
         <div class="page-footer pd24">
-            <van-button block type="primary" loading-type="circular">
+            <van-button block type="primary" loading-type="circular" @click="onBack">
                 完成
             </van-button>
         </div>
-
-
 
         <van-popup v-model:show="show" round closeable close-icon-position="top-left" position="bottom"
             :style="{ height: '80%' }">
@@ -60,19 +58,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useToggle } from '@vant/use';
 import { showLoadingToast, showToast } from "vant";
-import { UploaderBeforeRead, UploaderFileListItem } from "vant/lib/uploader/types";
+import { UploaderFileListItem } from "vant/lib/uploader/types";
 import { Numeric } from "vant/lib/utils";
+import { getVisa,uploadFile } from '@/api/user'
 
 export interface UploadList {
     title: string;
     required: boolean,
-    pdfUrl?: string,
-    pdfName?: string,
+    fileUrl?: string,
+    fileName?: string,
     status: number,
+    type: number
 }
 
 const router = useRouter();
@@ -81,64 +81,7 @@ const route = useRoute();
 const [show, showToggle] = useToggle(false);
 let activeItem = ref<UploadList>();
 
-const uploadList = ref<UploadList[]>([
-    {
-        title: '护照整本扫描件',
-        required: false,
-        pdfName: '213413513.pdf',
-        pdfUrl: '213413513.pdf',
-        status: 1,
-    },
-    {
-        title: '旧护照整本扫描件',
-        required: false,
-        pdfName: '213413513.pdf',
-        pdfUrl: '213413513.pdf',
-        status: 0
-    },
-    {
-        title: '身份证彩色扫描件',
-        required: true,
-        pdfName: '213413513.pdf',
-        pdfUrl: '213413513.pdf',
-        status: 0
-    },
-    {
-        title: '户口本整本彩色扫描件',
-        required: true,
-        pdfName: '213413513.pdf',
-        pdfUrl: '213413513.pdf',
-        status: 0
-    },
-    {
-        title: '财力证明',
-        required: false,
-        pdfName: '213413513.pdf',
-        pdfUrl: '213413513.pdf',
-        status: 0
-    },
-    {
-        title: '关系证明',
-        required: false,
-        pdfName: '213413513.pdf',
-        pdfUrl: '213413513.pdf',
-        status: 0
-    },
-    {
-        title: '在职证明彩色扫描件',
-        required: false,
-        pdfName: '213413513.pdf',
-        pdfUrl: '213413513.pdf',
-        status: 0
-    },
-    {
-        title: '营业执照彩色扫描件',
-        required: false,
-        pdfName: '213413513.pdf',
-        pdfUrl: '213413513.pdf',
-        status: 0
-    },
-])
+const uploadList = ref<UploadList[]>([])
 
 const iColor = computed(() => {
     return (required: boolean): string => {
@@ -174,24 +117,42 @@ const buttonText = computed(() => {
         return text
     }
 })
-
+let visaTitle = ref()
+// 获取签证信息
+const getList = () => {
+    let id = Number(route.params.id)
+    getVisa(id).then(res => {
+        if(res.code == 0) {
+            uploadList.value = res.data.materials
+            visaTitle.value = res.data.name
+        }
+    })
+}
 
 onMounted(() => {
-    console.log(route.params)
+    getList()
 })
 
 // 拦截
-const beforeRead: UploaderBeforeRead = (file) => {
+const beforeRead = (file: File | File[],type:number) => {
     const _file = file as File;
     console.log(file);
-
     const canUpType: string[] = ['application/pdf'];
 
     if (!canUpType.includes(_file.type)) {
         showToast('请上传pdf格式文件');
         return false;
     }
-    return true;
+    let fd = new FormData()
+    fd.append('fileData', file as any)
+    fd.append('trID', route.params.id as string)
+    fd.append('type', type as any)
+    uploadFile(fd).then(res => {
+        if(res.code == 0) {
+            getList()
+        }
+    })
+    return false;
 };
 
 type AfterRead = (items: UploaderFileListItem | UploaderFileListItem[], detail: {
@@ -207,19 +168,18 @@ const afterRead: AfterRead = (items, detail, upItem) => {
         forbidClick: true
     })
     try {
-        // upItem.pdfName = (items as UploaderFileListItem).file?.name;
+        // upItem.fileName = (items as UploaderFileListItem).file?.name;
     } catch (error) {
 
     } finally {
         setTimeout(() => {
             loadingToast.close();
-            upItem.pdfName = (items as UploaderFileListItem).file?.name;
-            upItem.pdfUrl = (items as UploaderFileListItem).objectUrl;
+            upItem.fileName = (items as UploaderFileListItem).file?.name;
+            upItem.fileUrl = (items as UploaderFileListItem).objectUrl;
             showToast('上传成功 ');
         }, 1000)
     }
 }
-
 
 
 const onBack = () => router.back();
@@ -230,7 +190,7 @@ const onViewTips = (item: UploadList) => {
     showToggle(true)
 }
 
-const toViewPdf = (url: UploadList['pdfUrl'], name: UploadList['pdfName']): void => {
+const toViewPdf = (url: UploadList['fileUrl'], name: UploadList['fileName']): void => {
     if (!url) return;
     router.push({
         name: "pdfView",

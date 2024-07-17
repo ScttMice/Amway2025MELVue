@@ -6,27 +6,27 @@
         <template v-if="personList && personList.length">
           <div class="list" v-for="item in personList">
             <div class="title flex align-middle space-between">
-              <div class="name">{{ item.name }}</div>
-              <div>{{ item.type }}</div>
+              <div class="name">{{ item.brName }}</div>
+              <div>{{ item.trTypeName }}</div>
             </div>
             <van-cell title="签证信息表" is-link @click="iframeClick(item.brid, item.trid)">
               <template #value>
-                <span :style="{ 'color': order_status[item.tr1] }">{{ item.tr1N }}</span>
+                <span :style="{ 'color': order_status[item.trVisainfoStatus] }">{{ item.trVisainfoStatusName }}</span>
               </template>
             </van-cell>
-            <van-cell title="证件材料" is-link @click="upClick(item.id)">
+            <van-cell title="证件材料" is-link @click="upClick(item.trid)">
               <template #value>
-                <span :style="{ 'color': order_status[item.tr2] }">{{ item.tr2N }}</span>
+                <span :style="{ 'color': order_status[item.trPickupStatus] }">{{ item.trPickupStatusName }}</span>
               </template>
             </van-cell>
             <van-cell title="办理状态">
               <template #value>
-                <span :style="{ 'color': order_status2[item.tr3] }">{{ item.tr3N }}</span>
+                <span :style="{ 'color': order_status2[item.trVisaResult] }">{{ item.trVisaResultName }}</span>
               </template>
             </van-cell>
             <van-cell title="签证下载">
               <template #value>
-                <span style="color:#0486FE" v-if="item.tr3 == 4" class="flex align-middle justify-end"><img
+                <span style="color:#0486FE" v-if="item.tr3 == 4" @click="upLoad(item.visaFile)" class="flex align-middle justify-end"><img
                     src="../../assets/image/word.png" alt="">
                   <div style="line-height: 24px;">下载</div>
                 </span>
@@ -37,69 +37,44 @@
       </div>
       <div class="hint_title">说明</div>
       <div class="btn flex align-middle space-between" style="background-color: #fff;">
-        <m-button :status="1" height="48px" color="#6D7278" width="175px" @close="back" title="退出" />
-        <m-button :status="2" height="48px" title="添加" @close="addClick" width="175px" />
+        <m-button :status="1" color="#6D7278" width="45%" @close="back" title="退出" />
+        <m-button :status="2" title="添加" @close="addClick" width="45%" />
       </div>
       <!-- 退出 -->
       <van-dialog v-model:show="backShow" className="dia_close" :showConfirmButton="false" :showCancelButton="false">
 
         <div class="txt">确认退出当前账号？</div>
         <div class="flex align-middle space-between" style="margin: 24px">
-          <m-button height="48px" width="120px" @close="confirm" title="确认" />
-          <m-button height="48px" title="返回" type="default" width="120px" @click="showToggle(false)" />
+          <m-button width="45%" @close="confirm" title="确认" />
+          <m-button title="返回" type="default" width="45%" @click="showToggle(false)" />
         </div>
       </van-dialog>
-      <addPersonDia ref="addPerson" @refresh="getPersonList" />
+      <addPersonDia ref="addPerson" @refresh="getList" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup name="person">
-import { ref, reactive, defineAsyncComponent } from "vue";
+import { ref, defineAsyncComponent, onBeforeMount } from "vue";
 import { useToggle } from '@vant/use';
 import { useRouter } from 'vue-router';
+import { getPersonList } from '@/api/user'
+import { removeLocalStorage } from '@/utils/storage'
 const router = useRouter();
 const addPersonDia = defineAsyncComponent(() => import('@/components/addPerson.vue'));
 const MButton = defineAsyncComponent(() => import('@/components/button.vue'));
-const personList = ref([
-  {
-    name: '张先生',
-    type: '经销商',
-    tr1: 1,
-    tr1N: '未填写',
-    tr2: 1,
-    tr2N: '未上传',
-    tr3: 0,
-    tr3N: '',
-    id: '2222',
-    brid: '112',
-    trid: '666'
-  },
-  {
-    name: '张小姐',
-    type: '家属',
-    tr1: 2,
-    tr1N: '未完成填写',
-    tr2: 2,
-    tr2N: '缺件',
-    tr3: 0,
-    tr3N: '',
-    brid: '888',
-    trid: '555',
-    id: '3333'
-  },
-])
+const personList = ref([] as EmptyArrayType)
 let order_status = {
   1: "#FA6401",
   2: "#FF0000",
   3: "#4CAF50",
-} as any
+} as EmptyObjectType
 let order_status2 = {
   1: "#FA6401",
   2: "#0486FE",
   3: "#6D7278",
   4: "#4CAF50"
-} as any
+} as EmptyObjectType
 const [backShow, showToggle] = useToggle(false);
 
 // 退出
@@ -109,6 +84,7 @@ const back = () => {
 // 确认退出
 const confirm = () => {
   showToggle(false)
+  removeLocalStorage('anliMelToken')
   router.push({name:'login'})
 }
 // 新增人员
@@ -117,18 +93,38 @@ const addClick = () => {
   addPerson.value.openDialog()
 }
 // 请求数据列表
-const getPersonList = () => {
-  alert('需要刷新页面')
+const getList = () => {
+  getPersonList().then(res => {
+    if(res.code == 0) {
+      personList.value = res.data
+    }
+  })
 }
 // 签证
 const iframeClick = (brid: string, trid: string) => {
   window.open(`https://e.mmice.com.cn/visa_info/transit.aspx?cid=31&gid=99&type=2&brid=${brid}&trid=${trid}&backurl=${window.location.href}`)
 }
 // 上传材料
-const upClick = (id: string) => {
+const upClick = (id: number) => {
   router.push({ name: 'uploadCertificate', params: { id: id } })
 }
+// 下载文件
+const upLoad = (url:string) => { //直接将牵牛地址传进来即可
+    const x = new window.XMLHttpRequest();
+    x.open('GET', url, true);
+    x.responseType = 'blob'; //转换返回的格式
+    x.onload = () => {
+        const url = window.URL.createObjectURL(x.response);
+        const a = document.createElement('a');
+        a.href = url;
+        a.click();
+    };
+    x.send();
+}
 
+onBeforeMount(() => {
+  getList()
+})
 </script>
 
 <style scoped lang="less">

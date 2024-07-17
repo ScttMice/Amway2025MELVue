@@ -30,17 +30,17 @@
     </van-form>
 
     <div class="login-tips mg-r-l-24 ">
-      <div class="login-tips-item flex">
-        <label>开放时间：</label>
-        <p>2024年9月30日至12月30日</p>
+      <div class="login-tips-item flex align-middle text-left">
+        <label>开放时间：</label>   
+        <p class="flex-1">2024年9月30日至12月30日</p>
       </div>
-      <div class="login-tips-item flex">
+      <div class="login-tips-item flex align-middle">
         <label>服务电话：</label>
         <p>021-00000000</p>
       </div>
-      <div class="login-tips-item flex">
+      <div class="login-tips-item flex align-middle text-left">
         <label>服务时间：</label>
-        <p>周一至周五09:30-18:00 (国定节假日除外)</p>
+        <p class="flex-1">周一至周五09:30-18:00 (国定节假日除外)</p>
       </div>
     </div>
 
@@ -49,12 +49,12 @@
     </div>
 
     <van-popup v-model:show="showPicker" round position="bottom">
-      <van-picker v-model="form.phoneCode" :columns-field-names="{ value: 'id' }" :columns="columns"
+      <van-picker v-model="form.countryCode" :columns-field-names="{ value: 'id' }" :columns="columns"
         @confirm="onConfirm" @cancel="showPickerToggle(false)">
       </van-picker>
     </van-popup>
 
-    <check-code v-model:show="showCode" v-model:time="time" :phoneCode="form.phoneCode[0]"
+    <check-code v-model:show="showCode" v-model:time="time" :countryCode="form.countryCode[0]"
       :phone="form.phone"></check-code>
   </div>
 </template>
@@ -64,15 +64,16 @@ import { reactive, ref, computed } from 'vue';
 import { useToggle } from '@vant/use';
 import { FormInstance, PickerConfirmEventParams, PickerOption } from 'vant';
 import country from "@/json/country.json";
-import { type LoginData } from "@/api/user";
+import { type LoginData, loginPassword } from "@/api/user";
 import validate from "@/utils/ys-validate";
+import { showToast } from 'vant';
 
 // import { useUserStore } from '@/store/modules/user';
 
 // const userStore = useUserStore(); 
 export type LoginForm = {
-  phoneCode: number[]
-} & Omit<LoginData, 'phoneCode'>
+  countryCode: number[]
+} & Omit<LoginData, 'countryCode'>
 
 const loginForm = ref<FormInstance>();
 
@@ -81,8 +82,8 @@ const [showPicker, showPickerToggle] = useToggle(false);
 const [showCode, showCodeToggle] = useToggle(false);
 
 const form = reactive<LoginForm>({
-  phone: '15313213213',
-  phoneCode: [86]
+  phone: '',
+  countryCode: [86]
 })
 
 let time = ref<number>(0);
@@ -93,13 +94,13 @@ const columns: PickerOption[] = country.map(item => ({
 }));
 
 
-const activeCode = computed(() => '+ ' + form.phoneCode[0]);
+const activeCode = computed(() => '+ ' + form.countryCode[0]);
 const disabled = computed(() => time.value > 0);
 
-const validator = () => validate.isAllPhone(form.phone, form.phoneCode[0]);
+const validator = () => validate.isAllPhone(form.phone, form.countryCode[0]);
 
 const onConfirm = ({ selectedValues }: PickerConfirmEventParams) => {
-  form.phoneCode = selectedValues as number[];
+  form.countryCode = selectedValues as number[];
   showPickerToggle(false)
 };
 
@@ -107,13 +108,19 @@ const onSubmit = async () => {
   await loginForm.value?.validate();
   loadingToggle(true)
   try {
-
+    let data = {
+      countryCode: form.countryCode[0],
+      phone: form.phone
+    }
+    loginPassword(data).then(res => {
+      if(res.code == 0) {
+        showCodeToggle(true)
+      }else {
+        showToast(res.message);
+      }
+    })
   } finally {
-    setTimeout(() => {
-      loadingToggle(false)
-      showCodeToggle(true)
-    }, 1000)
-    // loadingToggle(false)
+     loadingToggle(false)
   }
 
 };

@@ -14,6 +14,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: '',
       keepAlive: true,
+      auth:false
     },
   },
   {
@@ -23,6 +24,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: '',
       keepAlive: true,
+      auth:true
     },
   },
   {
@@ -32,6 +34,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: '',
       keepAlive: true,
+      auth:true
     },
   },
   {
@@ -41,6 +44,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: '',
       keepAlive: true,
+      auth:false
     },
   },
   {
@@ -50,6 +54,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: '',
       keepAlive: false,
+      auth:true
     },
   },
   // 匹配不到重定向会主页

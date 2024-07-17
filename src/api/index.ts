@@ -2,13 +2,14 @@ import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, In
 import { ContentTypeEnum } from "@/enums/requestEnum";
 import { showToast } from 'vant';
 import "vant/es/toast/style";
+import { getLocalStorage } from '@/utils/storage'
 
 
 const service: AxiosInstance = Axios.create({
   withCredentials: false,
   timeout: 5000,
   headers: {
-    "Content-Type": ContentTypeEnum.FORM_URLENCODED
+    "Content-Type": ContentTypeEnum.JSON
   },
   baseURL: import.meta.env.VITE_BASE_API,
 });
@@ -16,6 +17,9 @@ const service: AxiosInstance = Axios.create({
 
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    if (getLocalStorage('anliMelToken')) {
+      config.headers["Authorization"] = `Bearer ${getLocalStorage('anliMelToken')}`;
+    }
     return config;
   },
   (error: AxiosError) => {
@@ -26,12 +30,13 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     const res = response.data;
-    if (res.code !== 200) {
-      showToast(res.msg);
-      return Promise.reject(res.msg || 'Error');
-    } else {
-      return res;
-    }
+    // if (res.code !== 0) {
+    //   showToast('res.message');
+    //   return Promise.reject(res.message || 'Error');
+    // } else {
+    //   return res;
+    // }
+    return res;
   },
   (error: AxiosError) => {
     console.log('err' + error);

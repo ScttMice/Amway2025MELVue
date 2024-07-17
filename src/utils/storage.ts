@@ -21,3 +21,6 @@ export function getLocalStorage(key: string): any {
   if (json) json = window.JSON.parse(json);
   return json;
 }
+export function removeLocalStorage(key: string): void {
+  window.localStorage.removeItem(key)
+}

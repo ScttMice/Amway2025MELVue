@@ -9,9 +9,8 @@
    </template>
    
    <script lang="ts" setup>
-   import { ref } from "vue";
-   import { useRouter } from 'vue-router';
-        const router = useRouter();
+//    import { useRouter } from 'vue-router';
+//         const router = useRouter();
         const props = defineProps({
             // 列表内容
             loading: {
@@ -32,7 +31,7 @@
             },
             height: {
                 type: String,
-                default: '100%',
+                default: '48px',
             },
             size: {
                 type: String,
@@ -54,6 +53,8 @@
         const emit = defineEmits(['close']);
         const clickSub = () => {
             emit('close');
+            console.log(props);
+            
         }
    </script>
    
