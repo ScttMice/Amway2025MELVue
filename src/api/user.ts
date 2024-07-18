@@ -42,5 +42,5 @@ export function getVisa(trid:number) {
   return http.get(`/visa/${trid}`);
 }
 export function uploadFile(data:any) {
-  return http.post('/visa', data);
+  return http.post('/visa', data,{headers:{"Content-Type":"multipart/form-data;charset=UTF-8"}});
 }

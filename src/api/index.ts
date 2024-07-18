@@ -10,7 +10,7 @@ const service: AxiosInstance = Axios.create({
   withCredentials: false,
   timeout: 30000,
   headers: {
-    "Content-Type": ContentTypeEnum.FORM_DATA
+    "Content-Type": ContentTypeEnum.JSON
   },
   baseURL: import.meta.env.VITE_BASE_API
   // baseURL: import.meta.env.NODE_ENV == "development" ? import.meta.env.VITE_BASE_API : '/Amway2025MLE/api',
@@ -59,7 +59,6 @@ export const http = {
   put<T = any>(url: string, data?: object, config?: AxiosRequestConfig): Promise<T> {
     return service.put(url, data, config);
   },
-
   delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
     return service.delete(url, config);
   },

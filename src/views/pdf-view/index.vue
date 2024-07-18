@@ -151,61 +151,61 @@ const renderPage = (num: any, _pdfDoc?: any) => {
 // }
 
 // 实现缩放功能的函数
-function zoomPages() {
-    // 假设你有一个canvas容器数组，与页面数量相同
-    const canvases = document.querySelectorAll('.pdf-container canvas');
-    console.log(canvases[0]);
+// function zoomPages() {
+//     // 假设你有一个canvas容器数组，与页面数量相同
+//     const canvases = document.querySelectorAll('.pdf-container canvas');
+//     console.log(canvases[0]);
 
-    pages.value.forEach(function (page: any, index: number) {
-        const canvas = canvases[index] as HTMLCanvasElement;
-        const outputScale = window.devicePixelRatio || 1;
+//     pages.value.forEach(function (page: any, index: number) {
+//         const canvas = canvases[index] as HTMLCanvasElement;
+//         const outputScale = window.devicePixelRatio || 1;
 
-        const desiredWidth = windowWidth.value;
-        const viewport = page.getViewport({ scale: pdfScale.value, });
-        const scale = desiredWidth / viewport.width;
-        const scaledViewport = page.getViewport({ scale: scale, });
+//         const desiredWidth = windowWidth.value;
+//         const viewport = page.getViewport({ scale: pdfScale.value, });
+//         const scale = desiredWidth / viewport.width;
+//         const scaledViewport = page.getViewport({ scale: scale, });
 
 
-        canvas.width = Math.floor(scaledViewport.width * outputScale);
-        canvas.height = Math.floor(scaledViewport.height * outputScale);
-        canvas.style.width = Math.floor(scaledViewport.width) + "px";
-        canvas.style.height = Math.floor(scaledViewport.height) + "px";
-        console.log(page);
+//         canvas.width = Math.floor(scaledViewport.width * outputScale);
+//         canvas.height = Math.floor(scaledViewport.height * outputScale);
+//         canvas.style.width = Math.floor(scaledViewport.width) + "px";
+//         canvas.style.height = Math.floor(scaledViewport.height) + "px";
+//         console.log(page);
 
-        // canvas.style.marginBottom = '16px';
-        // canvas.style.borderBottom = '1px solid #EEEEEE';
+//         // canvas.style.marginBottom = '16px';
+//         // canvas.style.borderBottom = '1px solid #EEEEEE';
 
-        // pdfContainer.value?.appendChild(canvas);
+//         // pdfContainer.value?.appendChild(canvas);
 
-        // renderTask.promise.then(function () {
-        //     console.log('Page rendered');
-        // });
-    });
-}
+//         // renderTask.promise.then(function () {
+//         //     console.log('Page rendered');
+//         // });
+//     });
+// }
 
-function lastPage() {
-    if (state.pageNum > 1) {
-        renderPage(state.pageNum - 1);
-    }
-}
-function nextPage() {
-    if (state.pageNum < state.numPages) {
-        renderPage(state.pageNum + 1);
-    }
-}
-async function pageZoomOut() {
-    if (pdfScale.value < 5) {
-        pdfScale.value += 0.1;
-        zoomPages();
-    }
-}
-function pageZoomIn() {
-    if (pdfScale.value > 0.5) {
-        pdfScale.value -= 0.1;
-        // renderPage(state.pageNum);
-        zoomPages();
-    }
-}
+// function lastPage() {
+//     if (state.pageNum > 1) {
+//         renderPage(state.pageNum - 1);
+//     }
+// }
+// function nextPage() {
+//     if (state.pageNum < state.numPages) {
+//         renderPage(state.pageNum + 1);
+//     }
+// }
+// async function pageZoomOut() {
+//     if (pdfScale.value < 5) {
+//         pdfScale.value += 0.1;
+//         zoomPages();
+//     }
+// }
+// function pageZoomIn() {
+//     if (pdfScale.value > 0.5) {
+//         pdfScale.value -= 0.1;
+//         // renderPage(state.pageNum);
+//         zoomPages();
+//     }
+// }
 
 const onBack = () => router.back();
 

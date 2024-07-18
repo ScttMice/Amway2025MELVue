@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, createWebHashHistory, type RouteLocationNormalized } from 'vue-router'
+import { createRouter, createWebHistory,  type RouteLocationNormalized } from 'vue-router'
 import NProgress from "@/utils/progress";
 import routes from './routes';
 import { getLocalStorage } from '@/utils/storage'
