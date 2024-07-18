@@ -41,9 +41,10 @@ const navTitle = ref<string>();
 let pdfDoc: any = null;
 const pdfPages = ref<number>(0)
 const pdfScale = ref<number>(1)
+const pages = ref<any>([]);
 
 onMounted(() => {
-    loadFile('https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/calrgb.pdf');
+    // loadFile('https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/calrgb.pdf');
     navTitle.value = route.params.pdf_name as string;
 })
 
@@ -79,7 +80,7 @@ const loadFile = async (url: string) => {
 const renderPage = (num: any, _pdfDoc?: any) => {
     if (!_pdfDoc) return;
     _pdfDoc.getPage(num).then(async (page: any) => {
-        // page.cleanup()
+        page.cleanup()
         // const canvas: any = document.getElementById(`pdf-canvas`)
         const canvas: HTMLCanvasElement = document.createElement('canvas');
         if (canvas) {
@@ -118,12 +119,15 @@ const renderPage = (num: any, _pdfDoc?: any) => {
             });
 
             state.pageNum = num;
+
+            pages.value.push(page);
             // if (num < pdfPages.value) {
             //   renderPage(num + 1)
             // }
         }
     })
 }
+<<<<<<< HEAD
 // function lastPage() {
 //     if (state.pageNum > 1) {
 //         renderPage(state.pageNum - 1);
@@ -146,6 +150,65 @@ const renderPage = (num: any, _pdfDoc?: any) => {
 //         renderPage(state.pageNum);
 //     }
 // }
+=======
+
+// 实现缩放功能的函数
+function zoomPages() {
+    // 假设你有一个canvas容器数组，与页面数量相同
+    const canvases = document.querySelectorAll('.pdf-container canvas');
+    console.log(canvases[0]);
+
+    pages.value.forEach(function (page: any, index: number) {
+        const canvas = canvases[index] as HTMLCanvasElement;
+        const outputScale = window.devicePixelRatio || 1;
+
+        const desiredWidth = windowWidth.value;
+        const viewport = page.getViewport({ scale: pdfScale.value, });
+        const scale = desiredWidth / viewport.width;
+        const scaledViewport = page.getViewport({ scale: scale, });
+
+
+        canvas.width = Math.floor(scaledViewport.width * outputScale);
+        canvas.height = Math.floor(scaledViewport.height * outputScale);
+        canvas.style.width = Math.floor(scaledViewport.width) + "px";
+        canvas.style.height = Math.floor(scaledViewport.height) + "px";
+        console.log(page);
+
+        // canvas.style.marginBottom = '16px';
+        // canvas.style.borderBottom = '1px solid #EEEEEE';
+
+        // pdfContainer.value?.appendChild(canvas);
+
+        // renderTask.promise.then(function () {
+        //     console.log('Page rendered');
+        // });
+    });
+}
+
+function lastPage() {
+    if (state.pageNum > 1) {
+        renderPage(state.pageNum - 1);
+    }
+}
+function nextPage() {
+    if (state.pageNum < state.numPages) {
+        renderPage(state.pageNum + 1);
+    }
+}
+async function pageZoomOut() {
+    if (pdfScale.value < 5) {
+        pdfScale.value += 0.1;
+        zoomPages();
+    }
+}
+function pageZoomIn() {
+    if (pdfScale.value > 0.5) {
+        pdfScale.value -= 0.1;
+        // renderPage(state.pageNum);
+        zoomPages();
+    }
+}
+>>>>>>> ajq-0709
 
 const onBack = () => router.back();
 
@@ -159,7 +222,7 @@ const onBack = () => router.back();
 
 <style scoped lang="less">
 .page-tool {
-    position: absolute;
+    position: fixed;
     bottom: 35px;
     padding-left: 15px;
     padding-right: 15px;
