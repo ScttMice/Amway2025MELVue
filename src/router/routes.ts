@@ -40,7 +40,7 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('@/views/pdf-view/index.vue'),
     meta: {
       title: '',
-      keepAlive: true,
+      // keepAlive: true,
     },
   },
   {

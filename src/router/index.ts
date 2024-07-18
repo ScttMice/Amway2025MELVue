@@ -1,8 +1,9 @@
-import { createRouter, createWebHistory,type RouteLocationNormalized } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory, type RouteLocationNormalized } from 'vue-router'
 import NProgress from "@/utils/progress";
 import routes from './routes';
 
 const router = createRouter({
+  // history: createWebHashHistory(),
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from) {
