@@ -43,7 +43,7 @@ const pdfPages = ref<number>(0)
 const pdfScale = ref<number>(1)
 
 onMounted(() => {
-    loadFile('https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/calrgb.pdf');
+    loadFile(route.params.pdf_url as string);
     navTitle.value = route.params.pdf_name as string;
 })
 

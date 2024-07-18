@@ -16,7 +16,7 @@
             </van-cell>
             <van-cell title="证件材料" is-link @click="upClick(item.trid)">
               <template #value>
-                <span :style="{ 'color': order_status[item.trPickupStatus] }">{{ item.trPickupStatusName }}</span>
+                <span :style="{ 'color': order_status3[item.trPickupStatus] }">{{ item.trPickupStatusName }}</span>
               </template>
             </van-cell>
             <van-cell title="办理状态">
@@ -68,6 +68,11 @@ let order_status = {
   1: "#FA6401",
   2: "#FF0000",
   3: "#4CAF50",
+} as EmptyObjectType
+let order_status3 = {
+  1: "#FA6401",
+  2: "#4CAF50",
+  3: "#FF0000",
 } as EmptyObjectType
 let order_status2 = {
   1: "#FA6401",

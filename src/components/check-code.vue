@@ -91,7 +91,7 @@ const login = () => {
 			}
 			loginPhone(data).then(res => {
 			if(res.code == 0) {
-				if(res.tr16 == 1) {
+				if(res.data.tr16 == 0) {
 					router.push({
 						name: 'auth'
 					});

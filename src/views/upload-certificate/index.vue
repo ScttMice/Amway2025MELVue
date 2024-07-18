@@ -5,12 +5,10 @@
         </div>
 
         <div class="page-body" style="padding-bottom: 130px;">
-
-            <div v-for="(item, index) in uploadList" class="file-box flex space-between border-bottom1">
+            <template v-for="(item, index) in uploadList">
+                <div class="file-box flex space-between border-bottom1" v-if="item.required == 1">
                 <div class="file-box-label flex">
-                    <span class="font14"><i v-if="item.required || index === 0"
-                            :style="{ color: iColor(item.required) }">*</i> {{
-                                item.title }}</span>
+                    <span class="font14"><i style="color: red">*</i> {{ item.title }}</span>
                     <div class="font14 mg-l16 " style="color: rgb(4, 134, 254);">
                         <div class="flex align-middle" @click="onViewTips(item)">
                             <van-icon size="20px" name="question-o" />
@@ -32,6 +30,7 @@
                     </div>
                 </div>
             </div>
+            </template>
 
         </div>
 
@@ -68,7 +67,7 @@ import { getVisa,uploadFile } from '@/api/user'
 
 export interface UploadList {
     title: string;
-    required: boolean,
+    required: number,
     fileUrl?: string,
     fileName?: string,
     status: number,
@@ -82,12 +81,6 @@ const [show, showToggle] = useToggle(false);
 let activeItem = ref<UploadList>();
 
 const uploadList = ref<UploadList[]>([])
-
-const iColor = computed(() => {
-    return (required: boolean): string => {
-        return required ? 'red' : '';
-    }
-})
 
 const buttonColor = computed(() => {
     return (status: number): string => {
@@ -191,6 +184,7 @@ const onViewTips = (item: UploadList) => {
 }
 
 const toViewPdf = (url: UploadList['fileUrl'], name: UploadList['fileName']): void => {
+    console.log("🚀 ~ toViewPdf ~ url:", url)
     if (!url) return;
     router.push({
         name: "pdfView",

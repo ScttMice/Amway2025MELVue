@@ -4,14 +4,16 @@ import { showToast } from 'vant';
 import "vant/es/toast/style";
 import { getLocalStorage } from '@/utils/storage'
 
+console.log(import.meta.env.NODE_ENV ,'import.meta.env.NODE_ENV ');
 
 const service: AxiosInstance = Axios.create({
   withCredentials: false,
   timeout: 30000,
   headers: {
-    "Content-Type": ContentTypeEnum.JSON
+    "Content-Type": ContentTypeEnum.FORM_DATA
   },
-  baseURL: import.meta.env.NODE_ENV == "development" ? import.meta.env.VITE_BASE_API : '/Amway2025MLE/api',
+  baseURL: import.meta.env.VITE_BASE_API
+  // baseURL: import.meta.env.NODE_ENV == "development" ? import.meta.env.VITE_BASE_API : '/Amway2025MLE/api',
 });
 
 
