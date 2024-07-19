@@ -50,7 +50,7 @@
         </footer>
        <van-popup v-model:show="visaShow" round position="bottom">
         <van-picker
-            title="类型"
+            title="签证办理方式"
             :columns="columns"
             @confirm="onConfirm"
             @cancel="visaPickerToggle(false)"
@@ -58,7 +58,7 @@
        </van-popup>
        <van-popup v-model:show="typeShow" round position="bottom">
         <van-picker
-            title="签证办理方式"
+            title="类型"
             :columns="columns2"
             @confirm="onConfirm2"
             @cancel="typePickerToggle(false)"
@@ -108,6 +108,7 @@
     const columns2:(PickerOption | PickerColumn)[] = [
       { text: '经销商', value: 1 },
       { text: '家属', value: 2 },
+      {text: '职员', value: 8 }, 
     ];
     // 点击确定
     const onConfirm2 = ( item:any ) => {
