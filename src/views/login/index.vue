@@ -107,22 +107,18 @@ const onConfirm = ({ selectedValues }: PickerConfirmEventParams) => {
 const onSubmit = async () => {
   await loginForm.value?.validate();
   loadingToggle(true)
-  try {
-    let data = {
-      countryCode: form.countryCode[0],
-      phone: form.phone
-    }
-    loginPassword(data).then(res => {
-      if(res.code == 0) {
-        showCodeToggle(true)
-      }else {
-        showToast(res.message);
-      }
-    })
-  } finally {
-     loadingToggle(false)
+  let data = {
+    countryCode: form.countryCode[0],
+    phone: form.phone
   }
-
+  loginPassword(data).then(res => {
+    if(res.code == 0) {
+      console.log(11);
+      showCodeToggle(true)
+    }else {
+      showToast(res.message);
+    }
+  }).finally(() => loadingToggle(false))
 };
 </script>
 

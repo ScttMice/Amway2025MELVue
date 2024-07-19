@@ -107,7 +107,7 @@ const getList = () => {
 }
 // 签证
 const iframeClick = (brid: string, trid: string) => {
-  window.open(`https://e.mmice.com.cn/visa_info/transit.aspx?cid=31&gid=99&type=2&brid=${brid}&trid=${trid}&backurl=${window.location.href}`)
+  window.open(`https://e.mmice.com.cn/visa_info/transit.aspx?cid=18&gid=112&type=2&brid=${brid}&trid=${trid}&backurl=${window.location.href}`)
 }
 // 上传材料
 const upClick = (id: number) => {

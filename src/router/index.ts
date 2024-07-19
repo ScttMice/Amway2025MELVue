@@ -5,7 +5,8 @@ import { getLocalStorage } from '@/utils/storage'
 
 const router = createRouter({
   // history: createWebHashHistory(),
-  history: createWebHistory(),
+  history: createWebHistory('/Amway2025MEL'),
+  // base: '/Amway2025MEL',
   routes,
   scrollBehavior(to, from) {
     console.log("🚀 ~ scrollBehavior ~ to, from:", to, from)

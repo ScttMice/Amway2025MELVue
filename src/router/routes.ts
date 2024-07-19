@@ -57,9 +57,8 @@ export const routes: RouteRecordRaw[] = [
       auth:true
     },
   },
-  // 匹配不到重定向会主页
   {
-    // 找不到路由重定向到404页面
+    // 找不到路由重定向到主页
     path: '/:pathMatch(.*)',
     redirect: '/',
   },

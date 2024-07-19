@@ -7,8 +7,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
-  // base: '/base',
+  // base: './',
+  base:process.env.NODE_ENV === 'development' ? './' : '/Amway2025MEL/',
   // server: {
   //   host: true,
   //   port: 8010,
@@ -20,7 +20,7 @@ export default defineConfig({
     // doc: https://github.com/pengzhanbo/vite-plugin-mock-dev-server
     proxy: {
       "^/api": {
-        target: "http://192.168.22.60:4/Amway2025MLE/api",
+        target: "http://192.168.22.60:4/Amway2025MEL/api",
         changeOrigin: true, //支持跨域
         rewrite: (path) => path.replace(/^\/api/, ""), //重写真实路径,替换/api
       },
