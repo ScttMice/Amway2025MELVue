@@ -7,29 +7,29 @@
         <div class="page-body" style="padding-bottom: 130px;">
             <template v-for="(item, index) in uploadList">
                 <div class="file-box flex space-between border-bottom1" v-if="item.required == 1">
-                <div class="file-box-label flex">
-                    <span class="font14"><i style="color: red">*</i> {{ item.title }}</span>
-                    <div class="font14 mg-l16 " style="color: rgb(4, 134, 254);">
-                        <div class="flex align-middle" @click="onViewTips(item)">
-                            <van-icon size="20px" name="question-o" />
-                            <span v-if="index === 0">查看范例</span>
+                    <div class="file-box-label flex">
+                        <span class="font14"><i style="color: red">*</i> {{ item.title }}</span>
+                        <div class="font14 mg-l16 " style="color: rgb(4, 134, 254);">
+                            <div class="flex align-middle" @click="onViewTips(item)">
+                                <van-icon size="20px" name="question-o" />
+                                <span v-if="index === 0">查看范例</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-column">
+                        <span @click="toViewPdf(item.fileUrl, item.fileName)" class="font14 mg-b10"
+                            style="color: rgb(1, 145, 255);">{{
+                                item.fileName }}</span>
+                        <div class="text-right">
+                            <van-uploader :readonly="item.status === 1" :before-read="(e) => beforeRead(e, item.type)"
+                                :after-read="(items, detail) => afterRead(items, detail, item)" accept=".pdf">
+                                <van-button style="height: 30px;width: 85px;" :color="buttonColor(item.status)">
+                                    <span class="font14">{{ buttonText(item.status) }}</span>
+                                </van-button>
+                            </van-uploader>
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-column">
-                    <span @click="toViewPdf(item.fileUrl, item.fileName)" class="font14 mg-b10"
-                        style="color: rgb(1, 145, 255);">{{
-                            item.fileName }}</span>
-                    <div class="text-right">
-                        <van-uploader :readonly="item.status === 1" :before-read="(e) => beforeRead(e,item.type)"
-                            :after-read="(items, detail) => afterRead(items, detail, item)" accept=".pdf">
-                            <van-button style="height: 30px;width: 85px;" :color="buttonColor(item.status)">
-                                <span class="font14">{{ buttonText(item.status) }}</span>
-                            </van-button>
-                        </van-uploader>
-                    </div>
-                </div>
-            </div>
             </template>
 
         </div>
@@ -63,7 +63,7 @@ import { useToggle } from '@vant/use';
 import { showLoadingToast, showToast } from "vant";
 import { UploaderFileListItem } from "vant/lib/uploader/types";
 import { Numeric } from "vant/lib/utils";
-import { getVisa,uploadFile } from '@/api/user'
+import { getVisa, uploadFile } from '@/api/user'
 
 export interface UploadList {
     title: string;
@@ -115,7 +115,7 @@ let visaTitle = ref()
 const getList = () => {
     let id = Number(route.params.id)
     getVisa(id).then(res => {
-        if(res.code == 0) {
+        if (res.code == 0) {
             uploadList.value = res.data.materials
             visaTitle.value = res.data.name
         }
@@ -127,7 +127,7 @@ onMounted(() => {
 })
 
 // 拦截
-const beforeRead = (file: File | File[],type:number) => {
+const beforeRead = (file: File | File[], type: number) => {
     const _file = file as File;
     console.log(file);
     const canUpType: string[] = ['application/pdf'];
@@ -141,7 +141,7 @@ const beforeRead = (file: File | File[],type:number) => {
     fd.append('trID', route.params.id as string)
     fd.append('type', type as any)
     uploadFile(fd).then(res => {
-        if(res.code == 0) {
+        if (res.code == 0) {
             getList()
         }
     })

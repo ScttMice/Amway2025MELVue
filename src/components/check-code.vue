@@ -1,8 +1,7 @@
 <template>
 	<van-popup v-model:show="props.show" @open="onOpen" position="right" class="check-code-pop text-left">
 		<div class="header">
-			<van-nav-bar left-arrow :border="false" @click-left="backShow"
-				style="background-color: initial;">
+			<van-nav-bar left-arrow :border="false" @click-left="backShow" style="background-color: initial;">
 			</van-nav-bar>
 		</div>
 
@@ -14,9 +13,9 @@
 				<p style="line-height: 20px;">+ {{ props.countryCode }} {{ props.phone }}</p>
 			</div>
 
-			<van-password-input :mask="false" :length="4" gutter="20px" style="margin: 0;" :value="checkCode"
+			<van-password-input :mask="false" :length="6" gutter="10px" style="margin: 0;" :value="checkCode"
 				:focused="showKeyboard" @focus="showKeyToggle(true)" />
-			<van-number-keyboard :maxlength="4" v-model="checkCode" :show="showKeyboard" @blur="showKeyToggle(false)" />
+			<!-- <van-number-keyboard :maxlength="4" v-model="checkCode" :show="showKeyboard" @blur="showKeyToggle(false)" /> -->
 
 			<p class="font14 color-rgb94" style="margin-top: 32px;">
 				<template v-if="!isFinish"> <van-count-down @change="onCountDownChange" ref="countDownRef"
@@ -41,7 +40,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useToggle } from '@vant/use';
-import { type LoginData,loginPhone,loginPassword } from "@/api/user";
+import { type LoginData, loginPhone, loginPassword } from "@/api/user";
 import { useRouter } from "vue-router";
 import { closeToast, CountDownInstance, showLoadingToast } from 'vant';
 import { showToast } from 'vant';
@@ -87,21 +86,21 @@ const login = () => {
 		let data = {
 			countryCode: props.countryCode,
 			phone: props.phone,
-			code:checkCode.value
-			}
-			loginPhone(data).then(res => {
-			if(res.code == 0) {
-				if(res.data.tr16 == 0) {
+			code: checkCode.value
+		}
+		loginPhone(data).then(res => {
+			if (res.code == 0) {
+				if (res.data.tr16 == 0) {
 					router.push({
 						name: 'auth'
 					});
-				}else {
+				} else {
 					router.push({
 						name: 'person'
 					});
 				}
-				setLocalStorage('anliMelToken',res.data.accessToken)
-			}else {
+				setLocalStorage('anliMelToken', res.data.accessToken)
+			} else {
 				showToast(res.message);
 			}
 		})
@@ -118,7 +117,7 @@ const onCountDownChange = (currentTime: Record<string, any>) => {
 const backShow = () => {
 	emit('update:show', false)
 	checkCode.value = ''
-} 
+}
 
 const handleSend = () => {
 	// time.value = 60 * 1000;
@@ -132,11 +131,11 @@ const handleSend = () => {
 		let data = {
 			countryCode: props.countryCode,
 			phone: props.phone
-			}
-			loginPassword(data).then(res => {
-			if(res.code == 0) {
+		}
+		loginPassword(data).then(res => {
+			if (res.code == 0) {
 				showToast('发送成功');
-			}else {
+			} else {
 				showToast(res.message);
 			}
 		})

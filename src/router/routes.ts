@@ -14,7 +14,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: '',
       keepAlive: true,
-      auth:false
+      auth: false
     },
   },
   {
@@ -24,7 +24,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: '',
       keepAlive: true,
-      auth:true
+      auth: true
     },
   },
   {
@@ -34,7 +34,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: '',
       keepAlive: true,
-      auth:true
+      auth: true
     },
   },
   {
@@ -44,7 +44,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: '',
       keepAlive: true,
-      auth:false
+      auth: false
     },
   },
   {
@@ -54,7 +54,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: '',
       keepAlive: false,
-      auth:true
+      auth: true
     },
   },
   {

@@ -26,8 +26,8 @@
             </van-cell>
             <van-cell title="签证下载">
               <template #value>
-                <span style="color:#0486FE" v-if="item.tr3 == 4" @click="upLoad(item.visaFile)" class="flex align-middle justify-end"><img
-                    src="../../assets/image/word.png" alt="">
+                <span style="color:#0486FE" v-if="item.tr3 == 4" @click="upLoad(item.visaFile)"
+                  class="flex align-middle justify-end"><img src="../../assets/image/word.png" alt="">
                   <div style="line-height: 24px;">下载</div>
                 </span>
               </template>
@@ -90,7 +90,7 @@ const back = () => {
 const confirm = () => {
   showToggle(false)
   removeLocalStorage('anliMelToken')
-  router.push({name:'login'})
+  router.push({ name: 'login' })
 }
 // 新增人员
 let addPerson = ref()
@@ -100,7 +100,7 @@ const addClick = () => {
 // 请求数据列表
 const getList = () => {
   getPersonList().then(res => {
-    if(res.code == 0) {
+    if (res.code == 0) {
       personList.value = res.data
     }
   })
@@ -114,17 +114,17 @@ const upClick = (id: number) => {
   router.push({ name: 'uploadCertificate', params: { id: id } })
 }
 // 下载文件
-const upLoad = (url:string) => { //直接将牵牛地址传进来即可
-    const x = new window.XMLHttpRequest();
-    x.open('GET', url, true);
-    x.responseType = 'blob'; //转换返回的格式
-    x.onload = () => {
-        const url = window.URL.createObjectURL(x.response);
-        const a = document.createElement('a');
-        a.href = url;
-        a.click();
-    };
-    x.send();
+const upLoad = (url: string) => { //直接将牵牛地址传进来即可
+  const x = new window.XMLHttpRequest();
+  x.open('GET', url, true);
+  x.responseType = 'blob'; //转换返回的格式
+  x.onload = () => {
+    const url = window.URL.createObjectURL(x.response);
+    const a = document.createElement('a');
+    a.href = url;
+    a.click();
+  };
+  x.send();
 }
 
 onBeforeMount(() => {

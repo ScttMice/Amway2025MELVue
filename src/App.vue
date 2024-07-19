@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper">
-    <van-config-provider>
+  <div class="wrapper" style="height: 100%;">
+    <van-config-provider style="height: 100%;">
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
           <component :is="Component" />
