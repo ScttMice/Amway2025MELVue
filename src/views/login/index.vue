@@ -31,15 +31,15 @@
 
     <div class="login-tips mg-r-l-24 ">
       <div class="login-tips-item flex align-middle text-left">
-        <label>开放时间：</label>   
+        <label>开放时间：</label>
         <p class="flex-1">2024年9月30日至12月30日</p>
       </div>
       <div class="login-tips-item flex align-middle">
         <label>服务电话：</label>
         <p>021-00000000</p>
       </div>
-      <div class="login-tips-item flex align-middle text-left">
-        <label>服务时间：</label>
+      <div class="login-tips-item flex  text-left">
+        <label style="flex-shrink: 0;">服务时间：</label>
         <p class="flex-1">周一至周五09:30-18:00 (国定节假日除外)</p>
       </div>
     </div>
@@ -112,10 +112,10 @@ const onSubmit = async () => {
     phone: form.phone
   }
   loginPassword(data).then(res => {
-    if(res.code == 0) {
+    if (res.code == 0) {
       console.log(11);
       showCodeToggle(true)
-    }else {
+    } else {
       showToast(res.message);
     }
   }).finally(() => loadingToggle(false))
@@ -125,9 +125,10 @@ const onSubmit = async () => {
 <style scoped lang="less">
 .login {
   // padding: 20px;
+  height: 100%;
 
   .header {
-    margin: 70px 0 40px;
+    padding: 70px 0 40px;
   }
 
 
@@ -142,7 +143,7 @@ const onSubmit = async () => {
   }
 
   &-footer {
-    margin-top: 177px;
+    padding-top: 177px;
   }
 
 
