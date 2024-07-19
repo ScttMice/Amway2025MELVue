@@ -13,8 +13,15 @@
 				<p style="line-height: 20px;">+ {{ props.countryCode }} {{ props.phone }}</p>
 			</div>
 
-			<van-password-input :mask="false" :length="6" gutter="10px" style="margin: 0;" :value="checkCode"
-				:focused="showKeyboard" @focus="showKeyToggle(true)" />
+			<div style="position: relative;">
+				<van-password-input :mask="false" :length="codeMaxLength" gutter="10px" style="margin: 0;"
+					:value="checkCode?.toString()" :focused="showKeyboard" @focus="showKeyToggle(true)">
+				</van-password-input>
+				<input maxlength="6" @input="onInput" type="number" class="code-input" v-model="checkCode"
+					@focus="showKeyToggle(true)" />
+			</div>
+
+
 			<!-- <van-number-keyboard :maxlength="4" v-model="checkCode" :show="showKeyboard" @blur="showKeyToggle(false)" /> -->
 
 			<p class="font14 color-rgb94" style="margin-top: 32px;">
@@ -38,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useToggle } from '@vant/use';
 import { type LoginData, loginPhone, loginPassword } from "@/api/user";
 import { useRouter } from "vue-router";
@@ -69,17 +76,18 @@ const [loginLoading, loginLoadingToggle] = useToggle(false)
 const [showKeyboard, showKeyToggle] = useToggle(false)
 const [isFinish, setIsFinish] = useToggle(false)
 
-const checkCode = ref<string | undefined>();
+const checkCode = ref<string | number | undefined>();
+const codeMaxLength = ref<number>(6);
 let time = ref<number>(60 * 1000);
 
-const disabled = computed(() => checkCode.value?.length !== 4)
+const disabled = computed(() => checkCode.value?.toString()?.length !== codeMaxLength.value)
 
 const onOpen = () => {
 	countDownRef.value?.start();
 	setIsFinish(false);
 }
 
-const login = () => {
+const login = async () => {
 	console.log(time.value);
 	loginLoadingToggle(true)
 	try {
@@ -88,22 +96,21 @@ const login = () => {
 			phone: props.phone,
 			code: checkCode.value
 		}
-		loginPhone(data).then(res => {
-			if (res.code == 0) {
-				if (res.data.tr16 == 0) {
-					router.push({
-						name: 'auth'
-					});
-				} else {
-					router.push({
-						name: 'person'
-					});
-				}
-				setLocalStorage('anliMelToken', res.data.accessToken)
+		const res = await loginPhone(data);
+		if (res.code == 0) {
+			if (res.data.tr16 == 0) {
+				router.push({
+					name: 'auth'
+				});
 			} else {
-				showToast(res.message);
+				router.push({
+					name: 'person'
+				});
 			}
-		})
+			setLocalStorage('anliMelToken', res.data.accessToken)
+		} else {
+			showToast(res.message);
+		}
 	} finally {
 		loginLoadingToggle(false)
 	}
@@ -117,6 +124,13 @@ const onCountDownChange = (currentTime: Record<string, any>) => {
 const backShow = () => {
 	emit('update:show', false)
 	checkCode.value = ''
+}
+
+
+const onInput = () => {
+	if (checkCode.value && checkCode.value?.toString().length > codeMaxLength.value) {
+		checkCode.value = checkCode.value?.toString().substring(0, codeMaxLength.value);
+	}
 }
 
 const handleSend = () => {
@@ -161,6 +175,15 @@ const handleSend = () => {
 			font-size: 24px;
 			font-family: bold;
 			margin-bottom: 64px;
+		}
+
+		.code-input {
+			height: 50px;
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0;
 		}
 
 	}

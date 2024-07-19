@@ -1,48 +1,51 @@
 <template>
-  <div class="login home text-center">
-    <header class="header" style="width: 100%; text-align: center">
-      <img alt="" src="@/assets/logo.png" />
-    </header>
+  <div class="login flex  flex-column space-between home text-center">
+    <div>
+      <header class="header" style="width: 100%; text-align: center">
+        <img alt="" src="@/assets/logo.png" />
+      </header>
 
-    <strong class="title1">澳大利亚签证办理</strong>
+      <strong class="title1">澳大利亚签证办理</strong>
 
-    <p class="title2">安利2025墨尔本专案</p>
+      <p class="title2">安利2025墨尔本专案</p>
 
-    <van-form @submit="onSubmit" ref="loginForm">
-      <div class="form-item mg-r-l-24 text-left">
-        <label class="mg-b16 font14 color-rgb94" style="display: inline-block;">手机号码</label>
-        <van-field class="border-bottom1" type="tel" style="padding:0 0 8px 0;" border v-model="form.phone" name="手机号"
-          placeholder="手机号" right-icon="phone-o"
-          :rules="[{ required: true, message: '请填写手机号' }, { validator, message: '手机格式不正确' }]">
-          <template #label>
-            <van-field @click="showPickerToggle(true)" readonly class="pd0 font14" v-model="activeCode"
-              input-align="top" right-icon="arrow-down" />
-          </template>
-        </van-field>
-      </div>
+      <van-form @submit="onSubmit" ref="loginForm">
+        <div class="form-item mg-r-l-24 text-left">
+          <label class="mg-b16 font14 color-rgb94" style="display: inline-block;">手机号码</label>
+          <van-field class="border-bottom1" type="tel" style="padding:0 0 8px 0;" border v-model="form.phone" name="手机号"
+            placeholder="手机号" right-icon="phone-o"
+            :rules="[{ required: true, message: '请填写手机号' }, { validator, message: '手机格式不正确' }]">
+            <template #label>
+              <van-field @click="showPickerToggle(true)" readonly class="pd0 font14" v-model="activeCode"
+                input-align="top" right-icon="arrow-down" />
+            </template>
+          </van-field>
+        </div>
 
-      <div style="margin-top:28px;" class="mg24">
-        <van-button block type="primary" loading-type="circular" loading-text="发送验证码" :disabled="disabled"
-          :loading="loading" native-type="submit">
-          {{ time > 0 ? time + 'S 重新发送' : '发送验证码' }}
-        </van-button>
-      </div>
-    </van-form>
+        <div style="margin-top:28px;" class="mg24">
+          <van-button block type="primary" loading-type="circular" loading-text="发送验证码" :disabled="disabled"
+            :loading="loading" native-type="submit">
+            {{ time > 0 ? time + 'S 重新发送' : '发送验证码' }}
+          </van-button>
+        </div>
+      </van-form>
 
-    <div class="login-tips mg-r-l-24 ">
-      <div class="login-tips-item flex align-middle text-left">
-        <label>开放时间：</label>
-        <p class="flex-1">2024年9月30日至12月30日</p>
-      </div>
-      <div class="login-tips-item flex align-middle">
-        <label>服务电话：</label>
-        <p>021-00000000</p>
-      </div>
-      <div class="login-tips-item flex  text-left">
-        <label style="flex-shrink: 0;">服务时间：</label>
-        <p class="flex-1">周一至周五09:30-18:00 (国定节假日除外)</p>
+      <div class="login-tips mg-r-l-24 ">
+        <div class="login-tips-item flex align-middle text-left">
+          <label>开放时间：</label>
+          <p class="flex-1">2024年9月30日至12月30日</p>
+        </div>
+        <div class="login-tips-item flex align-middle">
+          <label>服务电话：</label>
+          <p>021-00000000</p>
+        </div>
+        <div class="login-tips-item flex  text-left">
+          <label style="flex-shrink: 0;">服务时间：</label>
+          <p class="flex-1">周一至周五09:30-18:00 (国定节假日除外)</p>
+        </div>
       </div>
     </div>
+
 
     <div class="login-footer text-center">
       <unline-text size="14px" color="#333333">登录遇到问题?</unline-text>
@@ -143,7 +146,8 @@ const onSubmit = async () => {
   }
 
   &-footer {
-    padding-top: 177px;
+    padding-top: 30px;
+    padding-bottom: 50px;
   }
 
 
