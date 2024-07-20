@@ -9,7 +9,7 @@
               <div class="name">{{ item.brName }}</div>
               <div>{{ item.trTypeName }}</div>
             </div>
-            <van-cell title="签证信息表" is-link @click="iframeClick(item.brid, item.trid)">
+            <van-cell title="签证信息表" is-link @click="iframeClick(item.brid, item.trid)" v-if="item.trVisas !==2 && item.trVisas !== 3">
               <template #value>
                 <span :style="{ 'color': order_status[item.trVisainfoStatus] }">{{ item.trVisainfoStatusName }}</span>
               </template>
@@ -19,12 +19,12 @@
                 <span :style="{ 'color': order_status3[item.trPickupStatus] }">{{ item.trPickupStatusName }}</span>
               </template>
             </van-cell>
-            <van-cell title="办理状态">
+            <van-cell title="办理状态" v-if="item.trVisas !==2 && item.trVisas !== 3">
               <template #value>
                 <span :style="{ 'color': order_status2[item.trVisaResult] }">{{ item.trVisaResultName }}</span>
               </template>
             </van-cell>
-            <van-cell title="签证下载">
+            <van-cell title="签证下载" v-if="item.trVisas !==2 && item.trVisas !== 3">
               <template #value>
                 <span style="color:#0486FE" v-if="item.tr3 == 4" @click="upLoad(item.visaFile)"
                   class="flex align-middle justify-end"><img src="../../assets/image/word.png" alt="">
