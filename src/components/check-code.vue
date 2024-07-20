@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { useToggle } from '@vant/use';
 import { type LoginData, loginPhone, loginPassword } from "@/api/user";
 import { useRouter } from "vue-router";
