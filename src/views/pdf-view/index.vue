@@ -22,7 +22,7 @@ import * as PDFJS from 'pdfjs-dist'
 import * as PdfWorker from 'pdfjs-dist/build/pdf.worker.mjs?url'
 import { showLoadingToast, showToast } from 'vant';
 import { windowWidth } from 'vant/lib/utils';
-import { nextTick, ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from "vue-router";
 
 const route = useRoute();

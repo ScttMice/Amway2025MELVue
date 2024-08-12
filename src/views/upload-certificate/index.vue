@@ -197,7 +197,7 @@ const toViewPdf = (url: UploadList['fileUrl'], name: UploadList['fileName']): vo
     //         file: window.btoa(url)
     //     }
     // })
-    console.log(window.location);
+    console.log(window.location, name);
 
     window.location.href = window.origin + '/pdfJS/web/viewer.html?file=' + url;
 }
