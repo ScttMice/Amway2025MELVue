@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory,  type RouteLocationNormalized } from 'vue-router'
+import { createRouter, createWebHistory, type RouteLocationNormalized } from 'vue-router'
 import NProgress from "@/utils/progress";
 import routes from './routes';
 import { getLocalStorage } from '@/utils/storage'
@@ -18,7 +18,7 @@ export interface toRouteType extends RouteLocationNormalized {
   meta: {
     title?: string;
     noCache?: boolean;
-    auth?:Boolean
+    auth?: Boolean
   };
 }
 
@@ -29,24 +29,24 @@ router.beforeEach((to: toRouteType, from, next) => {
   let auth = to.meta.auth
   if (auth) { // 需要登录
     if (token) {
-        document.body.scrollTop = 0
-        // firefox
-        document.documentElement.scrollTop = 0
-        next()
+      document.body.scrollTop = 0
+      // firefox
+      document.documentElement.scrollTop = 0
+      next()
     } else {
-        next({
-            path: '/login',
-            query: {
-                redirect: to.fullPath
-            }
-        })
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath
+        }
+      })
     }
-} else {
+  } else {
     document.body.scrollTop = 0
     // firefox
     document.documentElement.scrollTop = 0
     next()
-}
+  }
 });
 
 router.afterEach(() => {
