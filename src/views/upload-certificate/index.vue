@@ -186,17 +186,20 @@ const onViewTips = (item: UploadList) => {
 const toViewPdf = (url: UploadList['fileUrl'], name: UploadList['fileName']): void => {
     console.log("🚀 ~ toViewPdf ~ url:", url)
     if (!url) return;
-    router.push({
-        name: "pdfView",
-        // params: {
-        //     // pdf_url: url,
-        //     pdf_name: name
-        // },
-        query: {
-            pdf_name: name,
-            file: window.btoa(url)
-        }
-    })
+    // router.push({
+    //     name: "pdfView",
+    //     // params: {
+    //     //     // pdf_url: url,
+    //     //     pdf_name: name
+    //     // },
+    //     query: {
+    //         pdf_name: name,
+    //         file: window.btoa(url)
+    //     }
+    // })
+    console.log(window.location);
+
+    window.location.href = window.origin + '/pdfJS/web/viewer.html?file=' + url;
 }
 
 </script>
