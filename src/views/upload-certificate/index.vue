@@ -188,9 +188,13 @@ const toViewPdf = (url: UploadList['fileUrl'], name: UploadList['fileName']): vo
     if (!url) return;
     router.push({
         name: "pdfView",
-        params: {
-            pdf_url: url,
-            pdf_name: name
+        // params: {
+        //     // pdf_url: url,
+        //     pdf_name: name
+        // },
+        query: {
+            pdf_name: name,
+            file: window.btoa(url)
         }
     })
 }

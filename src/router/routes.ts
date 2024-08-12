@@ -39,7 +39,8 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     name: 'pdfView',
-    path: '/pdf-view/:pdf_name/:pdf_url',
+    // path: '/pdf-view/:pdf_name',
+    path: '/pdf-view',
     component: () => import('@/views/pdf-view/index.vue'),
     meta: {
       title: '',

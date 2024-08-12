@@ -13,8 +13,8 @@ const service: AxiosInstance = Axios.create({
     "Content-Type": ContentTypeEnum.JSON
   },
   // baseURL: import.meta.env.VITE_BASE_API
-  // baseURL: 'https://test.mmice.com.cn/Amway2025MEL/api'
-  baseURL: import.meta.env.NODE_ENV == "development" ? import.meta.env.VITE_BASE_API : '/Amway2025MLE/api',
+  baseURL: 'https://test.mmice.com.cn/Amway2025MEL/api'
+  // baseURL: import.meta.env.NODE_ENV == "development" ? import.meta.env.VITE_BASE_API : '/Amway2025MLE/api',
 });
 
 
