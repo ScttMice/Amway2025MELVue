@@ -28,6 +28,7 @@
             </van-cell>
             <van-cell title="签证下载" v-if="item.trPickupStatus == 3">
               <template #value>
+                <!-- <span style="color:#0486FE" v-if="item.trVisaResult == 5" @click="goview(item.visaFile)"  -->
                 <span style="color:#0486FE" v-if="item.trVisaResult == 5" @click="upLoad(item.visaFile)"
                   class="flex align-middle justify-end"><img src="../../assets/image/word.png" alt="">
                   <div style="line-height: 24px;">下载</div>
@@ -113,17 +114,27 @@ const iframeClick = (brid: string, trid: string) => {
 const upClick = (id: number) => {
   router.push({ name: 'uploadCertificate', params: { id: id } })
 }
+
+const goview = (url: string): void => {
+
+  window.location.href = window.origin + import.meta.env.VITE_BASE_URL + '/pdfJS/web/viewer.html?file=' + url;
+}
+
+
 // 下载文件
 const upLoad = (url: string) => { //直接将地址传进来即可
+  url = 'https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/calrgb.pdf';
   const x = new window.XMLHttpRequest();
   x.open('GET', url, true);
   x.responseType = 'blob'; //转换返回的格式
   x.onload = () => {
     const url = window.URL.createObjectURL(x.response);
     const a = document.createElement('a');
-    console.log(url,'url');
-    
+    console.log(url, 'url');
+
     a.href = url;
+    a.download = 'dsad.pdf'
+    document.body.appendChild(a)
     a.click();
   };
   x.send();

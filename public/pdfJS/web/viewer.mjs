@@ -6682,7 +6682,7 @@ class L10n {
     this.#l10n.resumeObserving();
   }
   static #fixupLangCode(langCode) {
-    langCode = langCode?.toLowerCase() || "en-us";
+    langCode = langCode?.toLowerCase() || "zh-cn";
     const PARTIAL_LANG_CODES = {
       en: "en-us",
       es: "es-es",
