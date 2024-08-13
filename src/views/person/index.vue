@@ -70,7 +70,7 @@ import { useRouter } from 'vue-router';
 import { getPersonList } from '@/api/user'
 import { removeLocalStorage } from '@/utils/storage'
 const router = useRouter();
-const addPersonDia = defineAsyncComponent(() => import('@/components/addPerson.vue'));
+// const addPersonDia = defineAsyncComponent(() => import('@/components/addPerson.vue'));
 const MButton = defineAsyncComponent(() => import('@/components/m-button.vue'));
 const personList = ref([] as EmptyArrayType)
 let order_status = {
@@ -98,7 +98,7 @@ const confirm = () => {
   router.push({ name: 'login' })
 }
 // 新增人员
-let addPerson = ref()
+// let addPerson = ref()
 // const addClick = () => {
 //   addPerson.value.openDialog()
 // }
