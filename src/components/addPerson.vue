@@ -77,7 +77,7 @@ import { ref, defineAsyncComponent, reactive } from "vue";
 import { useToggle } from '@vant/use';
 import { FormInstance, PickerConfirmEventParams, PickerColumn, PickerOption } from 'vant';
 import { type person, addPerson } from "@/api/user";
-const MButton = defineAsyncComponent(() => import('@/components/button.vue'));
+const MButton = defineAsyncComponent(() => import('@/components/m-button.vue'));
 const emit = defineEmits(['refresh']);
 const form = reactive<person>({
     turn: '',
