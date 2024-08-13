@@ -2,7 +2,7 @@ import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, In
 import { ContentTypeEnum } from "@/enums/requestEnum";
 import { showToast } from 'vant';
 import "vant/es/toast/style";
-import { getLocalStorage } from '@/utils/storage'
+import { getLocalStorage,removeLocalStorage } from '@/utils/storage'
 
 console.log(import.meta.env.NODE_ENV, 'import.meta.env.NODE_ENV ');
 
@@ -33,13 +33,14 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     const res = response.data;
-    // if (res.code !== 0) {
-    //   showToast('res.message');
-    //   return Promise.reject(res.message || 'Error');
-    // } else {
-    //   return res;
-    // }
-    return res;
+    if (res.code == 401) {
+      showToast('请重新登录');
+      removeLocalStorage('anliMelToken')
+      window.location.href = '/Amway2025MEL/'; 
+      return 
+    } else {
+      return res;
+    }
   },
   (error: AxiosError) => {
     console.log('err' + error);

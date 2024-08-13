@@ -108,7 +108,7 @@
     const columns2:(PickerOption | PickerColumn)[] = [
       { text: '经销商', value: 1 },
       { text: '家属', value: 2 },
-      {text: '职员', value: 8 }, 
+      {text: '职员', value: 3 }, 
     ];
     // 点击确定
     const onConfirm2 = ( item:any ) => {

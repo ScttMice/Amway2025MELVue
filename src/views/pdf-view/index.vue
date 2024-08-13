@@ -46,6 +46,7 @@ const pages = ref<any>([]);
 onMounted(() => {
     loadFile(atob(route.query.file as string));
     navTitle.value = route.query.pdf_name as string;
+
 })
 
 

@@ -136,6 +136,11 @@ const beforeRead = (file: File | File[], type: number) => {
         showToast('请上传pdf格式文件');
         return false;
     }
+    const toast1 = showLoadingToast({
+        message: '上传中...',
+        forbidClick: true,
+        duration: 20000
+        });
     let fd = new FormData()
     fd.append('fileData', file as any)
     fd.append('trID', route.params.id as string)
@@ -144,6 +149,8 @@ const beforeRead = (file: File | File[], type: number) => {
         if (res.code == 0) {
             getList()
         }
+    }).finally(() => {
+        toast1.close();
     })
     return false;
 };
