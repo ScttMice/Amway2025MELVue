@@ -121,6 +121,8 @@ const upLoad = (url: string) => { //直接将地址传进来即可
   x.onload = () => {
     const url = window.URL.createObjectURL(x.response);
     const a = document.createElement('a');
+    console.log(url,'url');
+    
     a.href = url;
     a.click();
   };
