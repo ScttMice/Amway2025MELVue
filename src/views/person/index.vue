@@ -16,7 +16,7 @@
               </template>
             </van-cell>
             <!-- item.trVisainfoStatus == 3 || item.trVisas == 2 -->
-            <van-cell title="证件材料" is-link @click="upClick(item.trid)" v-if="item.trVisainfoStatus == 3">
+            <van-cell title="证件材料" is-link @click="upClick(item.trid)"  v-if="item.trVisainfoStatus == 3">
               <template #value>
                 <span :style="{ 'color': order_status[item.trPickupStatus] }">{{ item.trPickupStatusName }}</span>
               </template>
@@ -28,7 +28,7 @@
             </van-cell>
             <van-cell title="签证下载" v-if="item.trPickupStatus == 3">
               <template #value>
-                <span style="color:#0486FE" v-if="item.tr3 == 5" @click="upLoad(item.visaFile)"
+                <span style="color:#0486FE" v-if="item.trVisaResult == 5" @click="upLoad(item.visaFile)"
                   class="flex align-middle justify-end"><img src="../../assets/image/word.png" alt="">
                   <div style="line-height: 24px;">下载</div>
                 </span>
