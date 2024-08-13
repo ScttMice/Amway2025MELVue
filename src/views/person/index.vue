@@ -45,6 +45,10 @@
         <m-button :status="1" color="#6D7278" width="45%" @close="back" title="退出" />
         <m-button :status="2" title="添加" @close="addClick" width="45%" />
       </div> -->
+      <div style="margin-top:24px;">
+        <m-button :status="1" color="#6D7278" @close="back" title="退出" />
+      </div>
+
       <!-- 退出 -->
       <van-dialog v-model:show="backShow" className="dia_close" :showConfirmButton="false" :showCancelButton="false">
 
@@ -54,7 +58,7 @@
           <m-button title="返回" type="default" width="45%" @click="showToggle(false)" />
         </div>
       </van-dialog>
-      <addPersonDia ref="addPerson" @refresh="getList" />
+      <!-- <addPersonDia ref="addPerson" @refresh="getList" /> -->
     </div>
   </div>
 </template>
@@ -67,7 +71,7 @@ import { getPersonList } from '@/api/user'
 import { removeLocalStorage } from '@/utils/storage'
 const router = useRouter();
 const addPersonDia = defineAsyncComponent(() => import('@/components/addPerson.vue'));
-const MButton = defineAsyncComponent(() => import('@/components/button.vue'));
+const MButton = defineAsyncComponent(() => import('@/components/m-button.vue'));
 const personList = ref([] as EmptyArrayType)
 let order_status = {
   1: "#FA6401",
@@ -84,9 +88,9 @@ let order_status2 = {
 const [backShow, showToggle] = useToggle(false);
 
 // 退出
-// const back = () => {
-//   showToggle(true)
-// }
+const back = () => {
+  showToggle(true)
+}
 // 确认退出
 const confirm = () => {
   showToggle(false)
@@ -115,10 +119,10 @@ const upClick = (id: number) => {
   router.push({ name: 'uploadCertificate', params: { id: id } })
 }
 
-const goview = (url: string): void => {
+// const goview = (url: string): void => {
 
-  window.location.href = window.origin + import.meta.env.VITE_BASE_URL + '/pdfJS/web/viewer.html?file=' + url;
-}
+//   window.location.href = window.origin + import.meta.env.VITE_BASE_URL + '/pdfJS/web/viewer.html?file=' + url;
+// }
 
 
 // 下载文件
