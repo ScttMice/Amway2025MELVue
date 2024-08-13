@@ -22,7 +22,7 @@ import * as PDFJS from 'pdfjs-dist'
 import * as PdfWorker from 'pdfjs-dist/build/pdf.worker.mjs?url'
 import { showLoadingToast, showToast } from 'vant';
 import { windowWidth } from 'vant/lib/utils';
-import { nextTick, ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from "vue-router";
 
 const route = useRoute();
@@ -44,9 +44,9 @@ const pdfScale = ref<number>(1)
 const pages = ref<any>([]);
 
 onMounted(() => {
-    // loadFile('https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/calrgb.pdf')测试地址
-    loadFile(route.params.pdf_url as string);
-    navTitle.value = route.params.pdf_name as string;
+    loadFile(atob(route.query.file as string));
+    navTitle.value = route.query.pdf_name as string;
+
 })
 
 
@@ -63,10 +63,12 @@ const loadFile = async (url: string) => {
         pdfDoc = pdf // 保存加载的pdf文件流
         state.numPages = pdfPages.value = pdfDoc.numPages // 获取pdf文件的总页数
         for (let index = 1; index <= pdf.numPages; index++) {
-            await nextTick(() => {
-                //渲染所有页面
-                renderPage(index, pdf) // 将pdf文件内容渲染到canvas
-            })
+            //渲染所有页面
+            renderPage(index, pdf) // 将pdf文件内容渲染到canvas
+            // await nextTick(() => {
+            //     //渲染所有页面
+            //     renderPage(index, pdf) // 将pdf文件内容渲染到canvas
+            // })
             // renderPage(1) // 将pdf文件内容渲染到canvas
         }
         loadingToast.close()

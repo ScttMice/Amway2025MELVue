@@ -4,7 +4,7 @@ import { showToast } from 'vant';
 import "vant/es/toast/style";
 import { getLocalStorage,removeLocalStorage } from '@/utils/storage'
 
-console.log(import.meta.env.NODE_ENV ,'import.meta.env.NODE_ENV ');
+console.log(import.meta.env.NODE_ENV, 'import.meta.env.NODE_ENV ');
 
 const service: AxiosInstance = Axios.create({
   withCredentials: false,
@@ -12,7 +12,8 @@ const service: AxiosInstance = Axios.create({
   headers: {
     "Content-Type": ContentTypeEnum.JSON
   },
-  baseURL: import.meta.env.VITE_BASE_API
+  // baseURL: import.meta.env.VITE_BASE_API
+  baseURL: 'https://test.mmice.com.cn/Amway2025MEL/api'
   // baseURL: import.meta.env.NODE_ENV == "development" ? import.meta.env.VITE_BASE_API : '/Amway2025MLE/api',
 });
 
