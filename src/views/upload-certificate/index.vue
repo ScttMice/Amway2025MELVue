@@ -199,7 +199,7 @@ const toViewPdf = (url: UploadList['fileUrl'], name: UploadList['fileName']): vo
     // })
     console.log(window.location, name);
 
-    window.location.href = window.origin + '/pdfJS/web/viewer.html?file=' + url;
+    window.location.href = window.origin + import.meta.env.VITE_BASE_URL + '/pdfJS/web/viewer.html?file=' + url;
 }
 
 </script>
