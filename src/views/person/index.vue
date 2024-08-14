@@ -29,24 +29,16 @@
             <van-cell title="签证下载" v-if="item.trPickupStatus == 3">
               <template #value>
                 <!-- <span style="color:#0486FE" v-if="item.trVisaResult == 5" @click="upLoad(item.visaFile)" -->
-                <span style="color:#0486FE" v-if="item.trVisaResult == 5" @click="goview(item.visaFile)"
+                <span style="color:#0486FE" v-if="item.trVisaResult == 5 && item.visaFile" @click="goview(item.visaFile)"
                   class="flex align-middle justify-end"><img src="../../assets/image/word.png" alt="">
                   <div style="line-height: 24px;">下载</div>
                 </span>
+                <span v-else-if="item.trVisaResult == 4">拒签</span>
                 <span v-else>出签后可下载</span>
               </template>
             </van-cell>
           </div>
         </template>
-      </div>
-      <div class="hint_title">说明</div>
-      <!-- <div style="height: 72px;"></div>
-      <div class="btn flex align-middle space-between" style="background-color: #fff;">
-        <m-button :status="1" color="#6D7278" width="45%" @close="back" title="退出" />
-        <m-button :status="2" title="添加" @close="addClick" width="45%" />
-      </div> -->
-      <div style="margin-top:24px;">
-        <m-button :status="1" color="#6D7278" @close="back" title="退出" />
       </div>
 
       <!-- 退出 -->
@@ -60,6 +52,16 @@
       </van-dialog>
       <!-- <addPersonDia ref="addPerson" @refresh="getList" /> -->
     </div>
+    <div class="hint_title">说明</div>
+      <!-- <div style="height: 72px;"></div>
+      <div class="btn flex align-middle space-between" style="background-color: #fff;">
+        <m-button :status="1" color="#6D7278" width="45%" @close="back" title="退出" />
+        <m-button :status="2" title="添加" @close="addClick" width="45%" />
+      </div> -->
+      <div class="line92"></div>
+      <div class="btn">
+        <m-button :status="1" color="#6D7278" @close="back" title="退出" />
+      </div>
   </div>
 </template>
 
@@ -67,7 +69,7 @@
 import { ref, defineAsyncComponent, onBeforeMount } from "vue";
 import { useToggle } from '@vant/use';
 import { useRouter } from 'vue-router';
-import { getPersonList } from '@/api/user'
+// import { getPersonList } from '@/api/user'
 import { removeLocalStorage } from '@/utils/storage'
 const router = useRouter();
 // const addPersonDia = defineAsyncComponent(() => import('@/components/addPerson.vue'));
@@ -103,13 +105,13 @@ const confirm = () => {
 //   addPerson.value.openDialog()
 // }
 // 请求数据列表
-const getList = () => {
-  getPersonList().then(res => {
-    if (res.code == 0) {
-      personList.value = res.data
-    }
-  })
-}
+// const getList = () => {
+//   getPersonList().then(res => {
+//     if (res.code == 0) {
+//       personList.value = res.data
+//     }
+//   })
+// }
 // 签证
 const iframeClick = (brid: string, trid: string) => {
   window.open(`https://e.mmice.com.cn/visa_info/transit.aspx?cid=18&gid=112&type=2&brid=${brid}&trid=${trid}&backurl=${window.location.href}`)
@@ -145,7 +147,7 @@ const goview = (url: string): void => {
 // }
 
 onBeforeMount(() => {
-  getList()
+  // getList()
 })
 </script>
 
@@ -193,14 +195,18 @@ onBeforeMount(() => {
 .home {
   .content {
     padding: 30px 24px;
+    min-height: 70vh;
     // height: calc(100vh - 120px);
     // overflow-y: auto
   }
 
   .hint_title {
     font-size: 18px;
+    padding:0 24px;
   }
-
+  .line92 {
+        height: 92px;
+    }
   .btn {
     position: fixed;
     width: 100%;
