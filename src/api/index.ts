@@ -36,7 +36,8 @@ service.interceptors.response.use(
     if (res.code == 401) {
       showToast('请重新登录');
       removeLocalStorage('anliMelToken')
-      window.location.href = '/Amway2025MEL/'; 
+      // window.location.href = '/Amway2025MEL/'; //测试
+      window.location.href = '/'; //正式
       return 
     } else {
       return res;

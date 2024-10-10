@@ -69,7 +69,7 @@
 import { ref, defineAsyncComponent, onBeforeMount } from "vue";
 import { useToggle } from '@vant/use';
 import { useRouter } from 'vue-router';
-// import { getPersonList } from '@/api/user'
+import { getPersonList } from '@/api/user'
 import { removeLocalStorage } from '@/utils/storage'
 const router = useRouter();
 // const addPersonDia = defineAsyncComponent(() => import('@/components/addPerson.vue'));
@@ -105,13 +105,13 @@ const confirm = () => {
 //   addPerson.value.openDialog()
 // }
 // 请求数据列表
-// const getList = () => {
-//   getPersonList().then(res => {
-//     if (res.code == 0) {
-//       personList.value = res.data
-//     }
-//   })
-// }
+const getList = () => {
+  getPersonList().then(res => {
+    if (res.code == 0) {
+      personList.value = res.data
+    }
+  })
+}
 // 签证
 const iframeClick = (brid: string, trid: string) => {
   window.open(`https://e.mmice.com.cn/visa_info/transit.aspx?cid=18&gid=112&type=2&brid=${brid}&trid=${trid}&backurl=${window.location.href}`)
@@ -147,7 +147,7 @@ const goview = (url: string): void => {
 // }
 
 onBeforeMount(() => {
-  // getList()
+  getList()
 })
 </script>
 

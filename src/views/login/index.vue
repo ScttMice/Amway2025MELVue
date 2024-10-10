@@ -37,11 +37,19 @@
         </div>
         <div class="login-tips-item flex align-middle">
           <label>服务电话：</label>
-          <p>021-00000000</p>
+          <p>021-61611822</p>
         </div>
-        <div class="login-tips-item flex  text-left">
+        <div class="login-tips-item flex text-left">
           <label style="flex-shrink: 0;">服务时间：</label>
-          <p class="flex-1">周一至周五09:30-18:00 (国定节假日除外)</p>
+          <div >
+            <div class="flex">周一至周五：
+            <div>
+              <p>上午09:30-12:30 </p>
+              <p>下午13:30-18:30</p>
+            </div>
+          </div>
+          <p >周六、周日及节假日休息</p>  
+          </div>
         </div>
       </div>
     </div>
