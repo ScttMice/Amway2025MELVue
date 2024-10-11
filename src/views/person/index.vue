@@ -15,8 +15,8 @@
                 <span :style="{ 'color': order_status[item.trVisainfoStatus] }">{{ item.trVisainfoStatusName }}</span>
               </template>
             </van-cell>
-            <!-- item.trVisainfoStatus == 3 || item.trVisas == 2 -->
-            <van-cell title="证件材料" is-link @click="upClick(item.trid)" v-if="item.trVisainfoStatus == 3">
+            <!-- v-if="item.trVisainfoStatus == 3" -->
+            <van-cell title="证件材料" is-link @click="upClick(item.trid)" >
               <template #value>
                 <span :style="{ 'color': order_status[item.trPickupStatus] }">{{ item.trPickupStatusName }}</span>
               </template>

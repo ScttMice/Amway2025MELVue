@@ -17,7 +17,7 @@
 				<van-password-input :mask="false" :length="codeMaxLength" gutter="10px" style="margin: 0;"
 					:value="checkCode?.toString()" :focused="showKeyboard" @focus="showKeyToggle(true)">
 				</van-password-input>
-				<input maxlength="6" @input="onInput" type="number" class="code-input" v-model="checkCode"
+				<input maxlength="6" @input="onInput" class="code-input" v-model="checkCode"
 					@focus="showKeyToggle(true)" />
 			</div>
 

@@ -12,7 +12,7 @@
                         <div class="font14 mg-l16 " style="color: rgb(4, 134, 254);">
                             <div class="flex align-middle">
                                 <van-icon size="20px" name="question-o" @click="onViewTips(item)" />
-                                <span v-if="index === 0">查看范例</span>
+                                <span>查看范例</span>
                                 <!-- <a v-if="item.type == 1709 && isIOS" href="#" @click="downloadPdf(wordUrl,'不随行父母同意函模板')">下载</a>
                                 <a v-if="item.type == 1709 && !isIOS" :href="wordUrl" download="不随行父母同意函模板.docx">下载</a> -->
                                 <!-- <a v-if="item.type == 1710 && isIOS" href="#" @click="downloadPdf(studyWordUrl,'在读证明模板')">下载</a>
@@ -75,7 +75,7 @@
                         </div>
                         <div v-show="typeMsg == 1581">
                             <div class="img_top">
-                            <img src="@/assets/image/huzhao_1.jpg" alt="护照首页">
+                            <img src="@/assets/image/huzhao_1.jpg" @click="lookClick('huzhao_1.jpg')" alt="护照首页">
                             <img src="@/assets/image/huzhao_2.jpg" alt="护照内容页">
                             <img src="@/assets/image/huzhao_3.jpg" alt="护照内容页">
                             </div>
@@ -221,7 +221,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useToggle } from '@vant/use';
-import { showLoadingToast, showToast } from "vant";
+import { showLoadingToast, showToast,showImagePreview } from "vant";
 import { UploaderFileListItem } from "vant/lib/uploader/types";
 import { Numeric } from "vant/lib/utils";
 import { getVisa, uploadFile } from '@/api/user'
@@ -374,7 +374,6 @@ const onViewTips = (item: UploadList) => {
     typeMsg.value = item.type
     showToggle(true)
 }
-
 const toViewPdf = (url: UploadList['fileUrl'], name: UploadList['fileName']): void => {
     console.log("🚀 ~ toViewPdf ~ url:", url)
     if (!url) return;
@@ -393,7 +392,11 @@ const toViewPdf = (url: UploadList['fileUrl'], name: UploadList['fileName']): vo
 
     window.location.href = window.origin + import.meta.env.VITE_BASE_URL + '/pdfJS/web/viewer.html?file=' + url;
 }
-
+// 查看图片
+const lookClick = (name:string) => {
+    showImagePreview([new URL(`/src/assets/image/${name}`, import.meta.url).href]);
+    
+}
 </script>
 
 <style scoped lang="less">
