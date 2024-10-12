@@ -5,7 +5,7 @@
         </div>
 
         <div class="page-body" style="padding-bottom: 130px;">
-            <template v-for="(item, index) in uploadList">
+            <template v-for="item in uploadList">
                 <div class="file-box flex space-between border-bottom1" v-if="item.required == 1">
                     <div class="file-box-label flex">
                         <span class="font14"><i style="color: red" v-if="item.type != 1583">*</i> {{ item.title }}</span>
@@ -27,12 +27,15 @@
                             style="color: rgb(1, 145, 255);">{{
                                 item.fileName }}</span>
                         <div class="text-right">
-                            <van-uploader :readonly="item.status === 1" :before-read="(e) => beforeRead(e, item.type)"
+                            <van-button style="height: 30px;width: 85px;" :color="buttonColor(item.status)" @click="item.status === 1 ? '' : onViewTips(item)">
+                                <span class="font14">{{ buttonText(item.status) }}</span>
+                            </van-button>
+                            <!-- <van-uploader :readonly="item.status === 1" :before-read="(e) => beforeRead(e, item.type)"
                                 :after-read="(items, detail) => afterRead(items, detail, item)" accept=".pdf">
                                 <van-button style="height: 30px;width: 85px;" :color="buttonColor(item.status)">
                                     <span class="font14">{{ buttonText(item.status) }}</span>
                                 </van-button>
-                            </van-uploader>
+                            </van-uploader> -->
                         </div>
                     </div>
                     
@@ -57,27 +60,28 @@
                     <div class="txt">
                         <div v-show="typeMsg == 1530">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/huzhao_1.jpg" alt="护照首页">
+                            <img src="@/assets/image/huzhao_1.jpg" @click="lookClick('huzhao_1.jpg')" alt="护照首页">
                             </div>
                             <div class="txt_bottom">
-                            <h4>护照首页彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
-                            <p>1）护照有效期需2025年11月15日之后</p>
+                                <h4>护照首页彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
+                                <p>1）护照有效期需2025年11月15日之后</p>
                             </div>
                         </div>
                         <div v-show="typeMsg == 1531">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/qianzheng.png" alt="签证页">
+                            <img src="@/assets/image/qianzheng.png" @click="lookClick('qianzheng.png')" alt="签证页">
                             </div>
                             <div class="txt_bottom">
-                            <h4>签证页彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
-                            <p>1）签证页有效期需在2024年12月15日之后</p>
+                                <h4>签证页彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
+                                <p>1）签证页有效期需在2024年12月15日之后</p>
                             </div>
+                            
                         </div>
                         <div v-show="typeMsg == 1581">
                             <div class="img_top">
                             <img src="@/assets/image/huzhao_1.jpg" @click="lookClick('huzhao_1.jpg')" alt="护照首页">
-                            <img src="@/assets/image/huzhao_2.jpg" alt="护照内容页">
-                            <img src="@/assets/image/huzhao_3.jpg" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_2.jpg" @click="lookClick('huzhao_2.jpg')" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_3.jpg" @click="lookClick('huzhao_3.jpg')" alt="护照内容页">
                             </div>
                             <div class="txt_bottom">
                             <h4>护照整本彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -89,9 +93,9 @@
                         </div>
                         <div v-show="typeMsg == 1583">
                             <div class="img_top">
-                            <img src="@/assets/image/huzhao_1.jpg" alt="护照首页">
-                            <img src="@/assets/image/huzhao_2.jpg" alt="护照内容页">
-                            <img src="@/assets/image/huzhao_3.jpg" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_1.jpg" @click="lookClick('huzhao_1.jpg')" alt="护照首页">
+                            <img src="@/assets/image/huzhao_2.jpg" @click="lookClick('huzhao_2.jpg')" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_3.jpg" @click="lookClick('huzhao_3.jpg')" alt="护照内容页">
                             </div>
                             <div class="txt_bottom">
                             <h4>旧护照彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -101,7 +105,7 @@
                         </div>
                         <div v-show="typeMsg == 1505">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/id_card.jpg" alt="彩色身份证">
+                            <img src="@/assets/image/id_card.jpg" @click="lookClick('id_card.jpg')" alt="彩色身份证">
                             </div>
                             <div class="txt_bottom">
                             <h4>身份证正反面彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -110,9 +114,9 @@
                         </div>
                         <div v-show="typeMsg == 1588">
                             <div class="img_top">
-                            <img src="@/assets/image/hukouben1.jpg" alt="户口本户主首页">
-                            <img src="@/assets/image/hukouben2.jpg" alt="户口本户主信息">
-                            <img src="@/assets/image/hukouben3.jpg" alt="户口本家庭成员">
+                            <img src="@/assets/image/hukouben1.jpg" @click="lookClick('hukouben1.jpg')" alt="户口本户主首页">
+                            <img src="@/assets/image/hukouben2.jpg" @click="lookClick('hukouben2.jpg')" alt="户口本户主信息">
+                            <img src="@/assets/image/hukouben3.jpg" @click="lookClick('hukouben3.jpg')" alt="户口本家庭成员">
                             </div>
                             <div class="txt_bottom">
                             <h4>户口本整本彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -122,7 +126,7 @@
                         </div>
                         <div v-show="typeMsg == 1591">
                             <div class="img_top img_only">
-                            <img src="@/assets/image/money.jpg" alt="财力证明">
+                            <img src="@/assets/image/money.jpg" @click="lookClick('money.jpg')" alt="财力证明">
                             </div>
                             <div class="txt_bottom">
                             <h4>财力证明彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -131,8 +135,8 @@
                         </div>
                         <div v-show="typeMsg == 1580">
                             <div class="img_top img_two">
-                            <img src="@/assets/image/jiehun_card.jpg" alt="结婚证">
-                            <img src="@/assets/image/chusheng_card.jpg" alt="出生证明">
+                            <img src="@/assets/image/jiehun_card.jpg" @click="lookClick('jiehun_card.jpg')" alt="结婚证">
+                            <img src="@/assets/image/chusheng_card.jpg" @click="lookClick('chusheng_card.jpg')" alt="出生证明">
                             </div>
                             <div class="txt_bottom">
                             <h4>关系证明彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -142,7 +146,7 @@
                         </div>
                         <div v-show="typeMsg == 1705">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/baoxian.jpg" alt="保险单">
+                            <img src="@/assets/image/baoxian.jpg" @click="lookClick('baoxian.jpg')" alt="保险单">
                             </div>
                             <div class="txt_bottom">
                             <h4>75周岁以上老人需额外提供材料--</h4>
@@ -154,7 +158,7 @@
                         </div>
                         <div v-show="typeMsg == 1706">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/id_card.jpg" alt="父母身份证">
+                            <img src="@/assets/image/id_card.jpg" @click="lookClick('id_card.jpg')" alt="父母身份证">
                             <!-- <img src="@/assets/image/jiehun_card.jpg" alt="结婚证">
                             <img src="@/assets/image/chusheng_card.jpg" alt="出生证明"> -->
                             </div>
@@ -168,7 +172,7 @@
                         </div>
                         <div v-show="typeMsg == 1707">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/lihun_card.jpg" alt="结婚证或离婚证">
+                            <img src="@/assets/image/lihun_card.jpg" @click="lookClick('lihun_card.jpg')" alt="结婚证或离婚证">
                             </div>
                             <div class="txt_bottom">
                             <h4>18周岁以下未成年人需额外提供材料--<span class="span_red">PDF文档</span>：</h4>
@@ -177,7 +181,7 @@
                         </div>
                         <div v-show="typeMsg == 1708">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/chusheng_card.jpg" alt="出生证明">
+                            <img src="@/assets/image/chusheng_card.jpg" @click="lookClick('chusheng_card.jpg')" alt="出生证明">
                             </div>
                             <div class="txt_bottom">
                             <h4>18周岁以下未成年需额外提供材料--<span class="span_red">PDF文档</span>：</h4>
@@ -186,7 +190,7 @@
                         </div>
                         <div v-show="typeMsg == 1709">
                             <div class="img_top" style="justify-content: center">
-                            <img src="@/assets/image/bsx.jpg" alt="不随行父母同意函">
+                            <img src="@/assets/image/bsx.jpg" @click="lookClick('bsx.jpg')" alt="不随行父母同意函">
                             </div>
                             <div class="txt_bottom">
                                 <h4>不随行父母同意函--<span class="span_red">PDF文档</span>：</h4>
@@ -199,7 +203,7 @@
                         </div>
                         <div v-show="typeMsg == 1710">
                             <div class="img_top" style="justify-content: center">
-                            <img src="@/assets/image/zaidu.jpg" alt="在读证明模版">
+                            <img src="@/assets/image/zaidu.jpg" @click="lookClick('zaidu.jpg')" alt="在读证明模版">
                             </div>
                             <div class="txt_bottom">
                                 <h4>在读证明彩色扫描件----<span class="span_red">PDF文档</span>（<span class="span_red">仅限在校学生额外提供</span>）：</h4>
@@ -210,6 +214,14 @@
                                 <p>2）签名处为班主任或其他老师亲笔签名，并加盖学校公章，电话为签字人电话需可以联系到。</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="flex_btn">
+                        <van-uploader :before-read="(e) => beforeRead(e, typeMsg)"
+                            :after-read="(items, detail) => afterRead(items, detail, activeItem)" accept=".pdf">
+                            <van-button class="btn" color="#2678FF">
+                                <span>下一步</span>
+                            </van-button>
+                        </van-uploader>
                     </div>
                 </div>
             </div>
@@ -239,7 +251,7 @@ const router = useRouter();
 const route = useRoute();
 
 const [show, showToggle] = useToggle(false);
-let activeItem = ref<UploadList>();
+let activeItem = ref({} as any);
 
 const uploadList = ref<UploadList[]>([])
 
@@ -314,6 +326,7 @@ onMounted(() => {
 const beforeRead = (file: File | File[], type: number) => {
     const _file = file as File;
     console.log(file);
+    showToggle(false)
     const canUpType: string[] = ['application/pdf'];
 
     if (!canUpType.includes(_file.type)) {
@@ -453,5 +466,11 @@ const lookClick = (name:string) => {
   }
   .span_red {
     color: #ef2d2d !important;
+  }
+  .flex_btn {
+    margin-top: 20px;
+    .btn {
+        width: 390px;
+    }
   }
 </style>

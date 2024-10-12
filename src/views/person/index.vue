@@ -2,6 +2,10 @@
   <div class="home">
     <van-nav-bar title="办签人员" fixed placeholder />
     <div class="content">
+      <div class="title_number flex align-middle space-between">
+          <p>户籍号：</p>
+          <p>{{ number }}</p>
+        </div>
       <div class="person_list">
         <template v-if="personList && personList.length">
           <div class="list" v-for="item in personList">
@@ -15,8 +19,7 @@
                 <span :style="{ 'color': order_status[item.trVisainfoStatus] }">{{ item.trVisainfoStatusName }}</span>
               </template>
             </van-cell>
-            <!-- v-if="item.trVisainfoStatus == 3" -->
-            <van-cell title="证件材料" is-link @click="upClick(item.trid)" >
+            <van-cell title="证件材料" is-link @click="upClick(item.trid)" v-if="item.trVisainfoStatus == 3">
               <template #value>
                 <span :style="{ 'color': order_status[item.trPickupStatus] }">{{ item.trPickupStatusName }}</span>
               </template>
@@ -105,10 +108,12 @@ const confirm = () => {
 //   addPerson.value.openDialog()
 // }
 // 请求数据列表
+let number = ref(0)
 const getList = () => {
   getPersonList().then(res => {
     if (res.code == 0) {
-      personList.value = res.data
+      personList.value = res.data.passengerCollection
+      number.value = res.data.brNumber
     }
   })
 }
@@ -152,18 +157,34 @@ onBeforeMount(() => {
 </script>
 
 <style scoped lang="less">
+ .title_number {
+    padding: 13px 24px;
+    line-height: 24px;
+    font-size: 18px;
+    background-color: rgba(5, 145, 127, .6);
+    color: #fff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-weight: bold;
+  }
 .person_list {
   // min-height: 70vh;
   font-size: 18px;
   overflow-y: auto;
-
   .list {
     width: 100%;
     border: 1px solid rgba(5, 145, 127, .3);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     margin-bottom: 30px;
-
+    &:first-child{
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        .title {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+      }
     .title {
       padding: 13px 24px;
       line-height: 24px;
@@ -172,13 +193,11 @@ onBeforeMount(() => {
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
       margin-bottom: 16px;
-
       .name {
         font-weight: bold;
         color: #000;
       }
     }
-
     :deep(.van-cell) {
       margin-bottom: 24px;
       font-size: 18px;
