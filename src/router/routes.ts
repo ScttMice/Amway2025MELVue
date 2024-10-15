@@ -29,7 +29,7 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     name: 'uploadCertificate',
-    path: '/upload-certificate/:id',
+    path: '/upload-certificate',
     component: () => import('@/views/upload-certificate/index.vue'),
     meta: {
       title: '',

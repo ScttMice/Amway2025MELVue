@@ -10,16 +10,16 @@
                     <div class="file-box-label flex">
                         <span class="font14"><i style="color: red" v-if="item.type != 1583">*</i> {{ item.title }}</span>
                         <div class="font14 mg-l16 " style="color: rgb(4, 134, 254);">
-                            <div class="flex align-middle">
-                                <van-icon size="20px" name="question-o" @click="onViewTips(item)" />
+                            <div class="flex align-middle mg-b10" @click="onViewTips(item)">
+                                <van-icon size="20px" name="question-o" />
                                 <span>查看范例</span>
                                 <!-- <a v-if="item.type == 1709 && isIOS" href="#" @click="downloadPdf(wordUrl,'不随行父母同意函模板')">下载</a>
                                 <a v-if="item.type == 1709 && !isIOS" :href="wordUrl" download="不随行父母同意函模板.docx">下载</a> -->
                                 <!-- <a v-if="item.type == 1710 && isIOS" href="#" @click="downloadPdf(studyWordUrl,'在读证明模板')">下载</a>
                                 <a v-if="item.type == 1710 && !isIOS" :href="studyWordUrl" download="在读证明模板.docx">下载</a> -->
-                                <a v-if="item.type == 1709 " :href="wordUrl" download="不随行父母同意函模板.docx">下载</a>
-                                <a v-if="item.type == 1710 " :href="studyWordUrl" download="在读证明模板.docx">下载</a>
                             </div>
+                            <a v-if="item.type == 1709" :href="wordUrl" download="不随行父母同意函模板.docx">下载</a>
+                            <a v-if="item.type == 1710" :href="studyWordUrl" download="在读证明模板.docx">下载</a>
                         </div>
                     </div>
                     <div class="flex flex-column">
@@ -60,7 +60,7 @@
                     <div class="txt">
                         <div v-show="typeMsg == 1530">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/huzhao_1.jpg" @click="lookClick('huzhao_1.jpg')" alt="护照首页">
+                            <img src="@/assets/image/huzhao_1.png" @click="lookClick('huzhao_1.png')" alt="护照首页">
                             </div>
                             <div class="txt_bottom">
                                 <h4>护照首页彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -79,23 +79,23 @@
                         </div>
                         <div v-show="typeMsg == 1581">
                             <div class="img_top">
-                            <img src="@/assets/image/huzhao_1.jpg" @click="lookClick('huzhao_1.jpg')" alt="护照首页">
-                            <img src="@/assets/image/huzhao_2.jpg" @click="lookClick('huzhao_2.jpg')" alt="护照内容页">
-                            <img src="@/assets/image/huzhao_3.jpg" @click="lookClick('huzhao_3.jpg')" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_1.png" @click="lookClick('huzhao_1.png')" alt="护照首页">
+                            <img src="@/assets/image/huzhao_2.png" @click="lookClick('huzhao_2.png')" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_3.png" @click="lookClick('huzhao_3.png')" alt="护照内容页">
                             </div>
                             <div class="txt_bottom">
                             <h4>护照整本彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
                             <p>1）需包含护照所有信息页、备注页、签证页、盖章页以及签名页（空白页无需扫描）；</p>
-                            <p>2）护照有效期需至行程结束后6个月，即2025年11月15日之后；</p>
+                            <p>2）护照有效期需至行程结束后6个月，即2025年11月10日之后；</p>
                             <p>3）护照至少需保留两页空白签证页（不含备注页），新版电子护照无需签名；</p>
-                            <p>4）所有页面需扫描保存为一个PDF文档，且页面必须清晰完整，不歪斜，无杂物（不可以拍照）。</p>
+                            <p>4）所有页面需扫描保存为一个PDF文档，且页面必须清晰完整，不歪斜，无杂物（不可以拍照）。<p style="background-color:yellow ;display: inline-block;">如有旧护照请一并扫描提供</p></p>
                             </div>
                         </div>
                         <div v-show="typeMsg == 1583">
                             <div class="img_top">
-                            <img src="@/assets/image/huzhao_1.jpg" @click="lookClick('huzhao_1.jpg')" alt="护照首页">
-                            <img src="@/assets/image/huzhao_2.jpg" @click="lookClick('huzhao_2.jpg')" alt="护照内容页">
-                            <img src="@/assets/image/huzhao_3.jpg" @click="lookClick('huzhao_3.jpg')" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_1.png" @click="lookClick('huzhao_1.png')" alt="护照首页">
+                            <img src="@/assets/image/huzhao_2.png" @click="lookClick('huzhao_2.png')" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_3.png" @click="lookClick('huzhao_3.png')" alt="护照内容页">
                             </div>
                             <div class="txt_bottom">
                             <h4>旧护照彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -105,7 +105,7 @@
                         </div>
                         <div v-show="typeMsg == 1505">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/id_card.jpg" @click="lookClick('id_card.jpg')" alt="彩色身份证">
+                            <img src="@/assets/image/id_card.png" @click="lookClick('id_card.png')" alt="彩色身份证">
                             </div>
                             <div class="txt_bottom">
                             <h4>身份证正反面彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -114,9 +114,9 @@
                         </div>
                         <div v-show="typeMsg == 1588">
                             <div class="img_top">
-                            <img src="@/assets/image/hukouben1.jpg" @click="lookClick('hukouben1.jpg')" alt="户口本户主首页">
-                            <img src="@/assets/image/hukouben2.jpg" @click="lookClick('hukouben2.jpg')" alt="户口本户主信息">
-                            <img src="@/assets/image/hukouben3.jpg" @click="lookClick('hukouben3.jpg')" alt="户口本家庭成员">
+                            <img src="@/assets/image/hukouben_1.png" @click="lookClick('hukouben_1.png')" alt="户口本户主首页">
+                            <img src="@/assets/image/hukouben_2.png" @click="lookClick('hukouben_2.png')" alt="户口本户主信息">
+                            <img src="@/assets/image/hukouben_3.png" @click="lookClick('hukouben_3.png')" alt="户口本家庭成员">
                             </div>
                             <div class="txt_bottom">
                             <h4>户口本整本彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -126,7 +126,7 @@
                         </div>
                         <div v-show="typeMsg == 1591">
                             <div class="img_top img_only">
-                            <img src="@/assets/image/money.jpg" @click="lookClick('money.jpg')" alt="财力证明">
+                            <img src="@/assets/image/money.png" @click="lookClick('money.png')" alt="财力证明">
                             </div>
                             <div class="txt_bottom">
                             <h4>财力证明彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -135,8 +135,9 @@
                         </div>
                         <div v-show="typeMsg == 1580">
                             <div class="img_top img_two">
-                            <img src="@/assets/image/jiehun_card.jpg" @click="lookClick('jiehun_card.jpg')" alt="结婚证">
+                            <img src="@/assets/image/lihun_card.jpg" @click="lookClick('lihun_card.jpg')" alt="结婚证">
                             <img src="@/assets/image/chusheng_card.jpg" @click="lookClick('chusheng_card.jpg')" alt="出生证明">
+                            <img src="@/assets/image/kinsfolk_card.png" @click="lookClick('kinsfolk_card.png')" alt="亲属关系证明">
                             </div>
                             <div class="txt_bottom">
                             <h4>关系证明彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -158,16 +159,16 @@
                         </div>
                         <div v-show="typeMsg == 1706">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/id_card.jpg" @click="lookClick('id_card.jpg')" alt="父母身份证">
-                            <!-- <img src="@/assets/image/jiehun_card.jpg" alt="结婚证">
-                            <img src="@/assets/image/chusheng_card.jpg" alt="出生证明"> -->
+                            <img src="@/assets/image/id_card.png" @click="lookClick('id_card.png')" alt="父母身份证">
+                            <img src="@/assets/image/lihun_card.jpg" @click="lookClick('lihun_card.jpg')" alt="结婚证">
+                            <img src="@/assets/image/chusheng_card.jpg" @click="lookClick('chusheng_card.jpg')" alt="出生证明">
                             </div>
                             <div class="txt_bottom">
-                            <h4>18周岁以下未成年人需额外提供材料--<span class="span_red">PDF文档</span>：</h4>
-                            <!-- <p>1）父母结婚证或离婚证彩色扫描件（PDF文档）；</p> -->
-                            <p>1）父母双方身份证彩色扫描件（PDF文档，正反两面需扫描在同一页A4纸上）；</p>
-                            <!-- <p>3）出生证明彩色扫描件（PDF文档，出生证明需清晰显示父母及小朋友姓名）；</p>
-                            <p>4）父母其中一方不出席，需填写“不随行父母同意书”，请下载并签署。</p> -->
+                            <h4>18周岁以下未成年人需额外提供材料：</h4>
+                            <p>1）父母结婚证或离婚证彩色扫描件（<span class="span_red">PDF文档</span>）；</p>
+                            <p>1）父母双方身份证彩色扫描件（<span class="span_red">PDF文档</span>，正反两面需扫描在同一页A4纸上）；</p>
+                            <p>3）出生证明彩色扫描件（<span class="span_red">PDF文档</span>，出生证明需清晰显示父母及小朋友姓名，小朋友姓名需与护照一致）；</p>
+                            <!-- <p>4）父母其中一方不出席，需填写“不随行父母同意书”，请下载并签署。</p> -->
                             </div>
                         </div>
                         <div v-show="typeMsg == 1707">
@@ -286,7 +287,7 @@ const buttonText = computed(() => {
 let visaTitle = ref()
 // 获取签证信息
 const getList = () => {
-    let id = Number(route.params.id)
+    let id = Number(route.query.id)
     getVisa(id).then(res => {
         if (res.code == 0) {
             uploadList.value = res.data.materials
@@ -325,7 +326,7 @@ onMounted(() => {
 // 拦截
 const beforeRead = (file: File | File[], type: number) => {
     const _file = file as File;
-    console.log(file);
+    console.log(file,type,'111111111111');
     showToggle(false)
     const canUpType: string[] = ['application/pdf'];
 
@@ -340,7 +341,7 @@ const beforeRead = (file: File | File[], type: number) => {
         });
     let fd = new FormData()
     fd.append('fileData', file as any)
-    fd.append('trID', route.params.id as string)
+    fd.append('trID', route.query.id as string)
     fd.append('type', type as any)
     uploadFile(fd).then(res => {
         if (res.code == 0) {

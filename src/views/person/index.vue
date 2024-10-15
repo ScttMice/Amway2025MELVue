@@ -123,7 +123,7 @@ const iframeClick = (brid: string, trid: string) => {
 }
 // 上传材料
 const upClick = (id: number) => {
-  router.push({ name: 'uploadCertificate', params: { id: id } })
+  router.push({ name: 'uploadCertificate', query: { id: id } })
 }
 
 const goview = (url: string): void => {
