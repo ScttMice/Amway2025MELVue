@@ -55,7 +55,35 @@
       </van-dialog>
       <!-- <addPersonDia ref="addPerson" @refresh="getList" /> -->
     </div>
-    <div class="hint_title">说明</div>
+    <div class="hint_title">
+      <div>说明</div>
+      <h3>1、操作流程：</h3>
+      <p>1)填写个人信息表：准确无误且完整地填写所有信息；</p>
+      <p>2)上传材料：根据网站上的提示逐个上传所需的文件。</p>
+      <h3>2、收件日期为**月**日-**月**日，为确保出行前可以顺利完成您的签证申请，请务必于截止收件日期（**月**日）前，通过签证办理系统完成个人信息表在线填写并上传所有签证材料。</h3>
+      <h3>3、签证材料审核通过后，我社会将材料提交至领馆进行审批。</h3>
+      <h3>4、签证申请递交后，澳大利亚使领馆可能会电话抽查，我社客服人员会致电提醒您注意接听领馆的抽查电话，请保持所有手机电话畅通。</h3>
+      <h3>5、客服信息：</h3>
+      <p>1)客服电话：021-61611822</p>
+      <div style="display: flex;">
+       <p style="min-width: 100px;">2)工作时间：</p> 
+        <div style="flex: 1;">
+          <!-- <span>上午09:30-12:30；</span>
+          <span>下午13:30-18:30</span> -->
+          <div style="display: flex;">
+           <span>周一至周五：</span>
+            <div style="flex: 1;">
+              <span>上午09:30-12:30；</span>
+              <span>下午13:30-18:30</span>
+            </div>
+          </div>
+          <span>（周六、周日及节假日休息）</span>
+        </div>
+       
+      </div>
+      <h3>6、签证申请结果和有效期均以领馆最终签发为准。</h3>
+    </div>
+   
       <!-- <div style="height: 72px;"></div>
       <div class="btn flex align-middle space-between" style="background-color: #fff;">
         <m-button :status="1" color="#6D7278" width="45%" @close="back" title="退出" />
@@ -222,6 +250,22 @@ onBeforeMount(() => {
   .hint_title {
     font-size: 18px;
     padding:0 24px;
+    line-height: 24px;
+    h3 {
+      color: #333;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+    p {
+      font-size: 14px;
+      color: #666;
+      text-indent: 1em;
+    }
+    span {
+      font-size: 14px;
+      color: #666;
+      display: inline-block
+    }
   }
   .line92 {
         height: 92px;
