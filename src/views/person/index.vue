@@ -13,33 +13,40 @@
               <div class="name">{{ item.brName }}</div>
               <div>{{ item.trTypeName }}</div>
             </div>
+            <van-cell title="签字状态" is-link @click="goRouter(item)">
+              <template #value>
+                <span :style="{ 'color': order_status3[item.tr41] }">{{ item.tr41Name }}</span>
+              </template>
+            </van-cell>
             <!--  v-if="item.trVisas !== 2 && item.trVisas !== 3" -->
-            <van-cell title="签证信息表" is-link @click="iframeClick(item.brid, item.trid)">
-              <template #value>
-                <span :style="{ 'color': order_status[item.trVisainfoStatus] }">{{ item.trVisainfoStatusName }}</span>
-              </template>
-            </van-cell>
-            <van-cell title="证件材料" is-link @click="upClick(item.trid)" v-if="item.trVisainfoStatus == 3">
-              <template #value>
-                <span :style="{ 'color': order_status[item.trPickupStatus] }">{{ item.trPickupStatusName }}</span>
-              </template>
-            </van-cell>
-            <van-cell title="办理状态" v-if="item.trPickupStatus == 3">
-              <template #value>
-                <span :style="{ 'color': order_status2[item.trVisaResult] }">{{ item.trVisaStepStatusName }}</span>
-              </template>
-            </van-cell>
-            <van-cell title="签证下载" v-if="item.trPickupStatus == 3">
-              <template #value>
-                <!-- <span style="color:#0486FE" v-if="item.trVisaResult == 5" @click="upLoad(item.visaFile)" -->
-                <span style="color:#0486FE" v-if="item.trVisaResult == 5 && item.visaFile" @click="goview(item.visaFile)"
-                  class="flex align-middle justify-end"><img src="../../assets/image/word.png" alt="">
-                  <div style="line-height: 24px;">下载</div>
-                </span>
-                <span v-else-if="item.trVisaResult == 4">拒签</span>
-                <span v-else>出签后可下载</span>
-              </template>
-            </van-cell>
+            <template v-if="item.tr41 == 2">
+              <van-cell title="签证信息表" is-link @click="iframeClick(item.brid, item.trid)">
+                <template #value>
+                  <span :style="{ 'color': order_status[item.trVisainfoStatus] }">{{ item.trVisainfoStatusName }}</span>
+                </template>
+              </van-cell>
+              <van-cell title="证件材料" is-link @click="upClick(item.trid)" v-if="item.trVisainfoStatus == 3">
+                <template #value>
+                  <span :style="{ 'color': order_status[item.trPickupStatus] }">{{ item.trPickupStatusName }}</span>
+                </template>
+              </van-cell>
+              <van-cell title="办理状态" v-if="item.trPickupStatus == 3">
+                <template #value>
+                  <span :style="{ 'color': order_status2[item.trVisaResult] }">{{ item.trVisaStepStatusName }}</span>
+                </template>
+              </van-cell>
+              <van-cell title="签证下载" v-if="item.trPickupStatus == 3">
+                <template #value>
+                  <!-- <span style="color:#0486FE" v-if="item.trVisaResult == 5" @click="upLoad(item.visaFile)" -->
+                  <span style="color:#0486FE" v-if="item.trVisaResult == 5 && item.visaFile" @click="goview(item.visaFile)"
+                    class="flex align-middle justify-end"><img src="../../assets/image/word.png" alt="">
+                    <div style="line-height: 24px;">下载</div>
+                  </span>
+                  <span v-else-if="item.trVisaResult == 4">拒签</span>
+                  <span v-else>出签后可下载</span>
+                </template>
+              </van-cell>
+            </template>
           </div>
         </template>
       </div>
@@ -68,8 +75,6 @@
       <div style="display: flex;">
        <p style="min-width: 100px;">2)工作时间：</p> 
         <div style="flex: 1;">
-          <!-- <span>上午09:30-12:30；</span>
-          <span>下午13:30-18:30</span> -->
           <div style="display: flex;">
            <span>周一至周五：</span>
             <div style="flex: 1;">
@@ -102,6 +107,7 @@ import { useToggle } from '@vant/use';
 import { useRouter } from 'vue-router';
 import { getPersonList } from '@/api/user'
 import { removeLocalStorage } from '@/utils/storage'
+import { setLocalStorage } from '@/utils/storage'
 const router = useRouter();
 // const addPersonDia = defineAsyncComponent(() => import('@/components/addPerson.vue'));
 const MButton = defineAsyncComponent(() => import('@/components/m-button.vue'));
@@ -119,7 +125,10 @@ let order_status2 = {
   5: "#4CAF50"
 } as EmptyObjectType
 const [backShow, showToggle] = useToggle(false);
-
+let order_status3 = {
+  1: "#FA6401",
+  2: "#4CAF50",
+} as EmptyObjectType
 // 退出
 const back = () => {
   showToggle(true)
@@ -135,6 +144,18 @@ const confirm = () => {
 // const addClick = () => {
 //   addPerson.value.openDialog()
 // }
+// 去签字
+const goRouter = (item:EmptyObjectType) => {
+  let data = {
+    name: item.brName,
+    type: item.tr41,
+    isAdult: item.isAdult,
+    trid:item.trid,
+    file:item.file
+  }
+  setLocalStorage('membertMsg',data)
+  router.push({name:'signature'})
+}
 // 请求数据列表
 let number = ref(0)
 const getList = () => {
@@ -258,12 +279,10 @@ onBeforeMount(() => {
     }
     p {
       font-size: 14px;
-      color: #666;
       text-indent: 1em;
     }
     span {
       font-size: 14px;
-      color: #666;
       display: inline-block
     }
   }
@@ -271,6 +290,7 @@ onBeforeMount(() => {
         height: 92px;
     }
   .btn {
+    background: #fff;
     position: fixed;
     width: 100%;
     bottom: 0;

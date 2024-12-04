@@ -59,6 +59,16 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
+    name: 'signature',
+    path: '/signature',
+    component: () => import('@/views/signature/index.vue'),
+    meta: {
+      title: '',
+      keepAlive: false,
+      auth: true
+    },
+  },
+  {
     // 找不到路由重定向到主页
     path: '/:pathMatch(.*)',
     redirect: '/',

@@ -20,7 +20,7 @@ export default defineConfig({
     // doc: https://github.com/pengzhanbo/vite-plugin-mock-dev-server
     proxy: {
       "^/api": {
-        target: "http://192.168.22.60:4/Amway2025MEL/api",
+        target: "https://amway2025mel-uat.mmice.com.cn/api",
         changeOrigin: true, //支持跨域
         rewrite: (path) => path.replace(/^\/api/, ""), //重写真实路径,替换/api
       },

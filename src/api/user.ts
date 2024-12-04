@@ -22,6 +22,7 @@ export type person = {
  * @method addPerson //获取办签人员列表
  * @method getVisa //获取签证加载
  * @method uploadFile //上传文件
+ * @method uploadImg //签字
  */
 export function loginPassword(data:LoginData) {
   return http.post('/auth/phoneCode', data);
@@ -43,4 +44,7 @@ export function getVisa(trid:number) {
 }
 export function uploadFile(data:any) {
   return http.post('/visa', data,{headers:{"Content-Type":"multipart/form-data;charset=UTF-8"}});
+}
+export function uploadImg(data:any) {
+  return http.post('/sign/uploadVisaFile', data);
 }

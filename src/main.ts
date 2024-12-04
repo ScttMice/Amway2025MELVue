@@ -5,6 +5,7 @@ import './assets/css/base.css'
 import './assets/css/main.less'
 import BaseDirective from './directive'
 import { createPinia } from 'pinia'
+import Vue3Esign from 'vue3-esign'
 import './components/index'
 // import 'vant/lib/index.css';
 import 'vant/es/dialog/style';
@@ -20,4 +21,4 @@ const app = createApp(App)
 app.use(BaseDirective)
 app.use(createPinia())
 
-app.use(router).mount('#app')
+app.use(router).use(Vue3Esign).mount('#app')

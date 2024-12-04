@@ -1,13 +1,13 @@
 <template>
   <div class="login flex  flex-column space-between home text-center">
     <div>
-      <header class="header" style="width: 100%; text-align: center">
-        <img alt="" src="@/assets/logo.png" />
+      <header class="header">
+        <img alt="" src="@/assets/image/logo.png" />
       </header>
 
-      <strong class="title1">澳大利亚签证办理</strong>
+      <!-- <strong class="title1">澳大利亚签证办理</strong>
 
-      <p class="title2">安利2025墨尔本专案</p>
+      <p class="title2">安利2025墨尔本专案</p> -->
 
       <van-form @submit="onSubmit" ref="loginForm">
         <div class="form-item mg-r-l-24 text-left">
@@ -31,10 +31,10 @@
       </van-form>
 
       <div class="login-tips mg-r-l-24 ">
-        <div class="login-tips-item flex align-middle text-left">
+        <!-- <div class="login-tips-item flex align-middle text-left">
           <label>开放时间：</label>
           <p class="flex-1">2024年9月30日至12月30日</p>
-        </div>
+        </div> -->
         <div class="login-tips-item flex align-middle">
           <label>服务电话：</label>
           <p>021-61611822</p>
@@ -55,9 +55,9 @@
     </div>
 
 
-    <div class="login-footer text-center">
+    <!-- <div class="login-footer text-center">
       <unline-text size="14px" color="#333333">登录遇到问题?</unline-text>
-    </div>
+    </div> -->
 
     <van-popup v-model:show="showPicker" round position="bottom">
       <van-picker v-model="form.countryCode" :columns-field-names="{ value: 'id' }" :columns="columns"
@@ -124,7 +124,6 @@ const onSubmit = async () => {
   }
   loginPassword(data).then(res => {
     if (res.code == 0) {
-      console.log(11);
       showCodeToggle(true)
     } else {
       showToast(res.message);
@@ -139,7 +138,11 @@ const onSubmit = async () => {
   height: 100%;
 
   .header {
-    padding: 70px 0 40px;
+    padding: 70px 24px;
+    text-align: center;
+    img {
+      width: 100%;
+    }
   }
 
 

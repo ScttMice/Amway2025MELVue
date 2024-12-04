@@ -6,18 +6,20 @@
 
         <div class="page-body" style="padding-bottom: 130px;">
             <template v-for="item in uploadList">
-                <div class="file-box flex space-between border-bottom1" v-if="item.required == 1">
+                <!--  v-if="item.required == 1" -->
+                <div class="file-box flex space-between border-bottom1" v-if="item.required == 1" >
                     <div class="file-box-label flex">
-                        <span class="font14"><i style="color: red" v-if="item.type != 1583">*</i> {{ item.title }}</span>
-                        <div class="font14 mg-l16 " style="color: rgb(4, 134, 254);">
+                        <span class="font14"><i style="color: red" v-if="item.type != 1583 && item.type != 1709">*</i> {{ item.title }}</span>
+                        <div class="font14 mg-l16 " style="color: rgb(4, 134, 254);min-width: 100px;">
                             <div class="flex align-middle mg-b10" @click="onViewTips(item)">
                                 <van-icon size="20px" name="question-o" />
                                 <span>查看范例</span>
-                                <!-- <a v-if="item.type == 1709 && isIOS" href="#" @click="downloadPdf(wordUrl,'不随行父母同意函模板')">下载</a>
-                                <a v-if="item.type == 1709 && !isIOS" :href="wordUrl" download="不随行父母同意函模板.docx">下载</a> -->
-                                <!-- <a v-if="item.type == 1710 && isIOS" href="#" @click="downloadPdf(studyWordUrl,'在读证明模板')">下载</a>
-                                <a v-if="item.type == 1710 && !isIOS" :href="studyWordUrl" download="在读证明模板.docx">下载</a> -->
+                    
                             </div>
+                            <!-- <a v-if="item.type == 1709 && isIOS" href="#" @click="downloadPdf(wordUrl,'不随行父母同意函模板')">下载</a>
+                            <a v-if="item.type == 1709 && !isIOS" :href="wordUrl" download="不随行父母同意函模板.docx">下载</a>
+                            <a v-if="item.type == 1710 && isIOS" href="#" @click="downloadPdf(studyWordUrl,'在读证明模板')">下载</a>
+                            <a v-if="item.type == 1710 && !isIOS" :href="studyWordUrl" download="在读证明模板.docx">下载</a> -->
                             <a v-if="item.type == 1709" :href="wordUrl" download="不随行父母同意函模板.docx">下载</a>
                             <a v-if="item.type == 1710" :href="studyWordUrl" download="在读证明模板.docx">下载</a>
                         </div>
@@ -49,7 +51,6 @@
                 完成
             </van-button>
         </div>
-
         <van-popup v-model:show="show" round closeable close-icon-position="top-left" position="bottom"
             :style="{ height: '80%' }">
             <div class="tips">
@@ -60,7 +61,7 @@
                     <div class="txt">
                         <div v-show="typeMsg == 1530">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/huzhao_1.png" @click="lookClick('huzhao_1.png')" alt="护照首页">
+                            <img src="@/assets/image/huzhao_1.jpg" @click="lookClick('huzhao_1.jpg')" alt="护照首页">
                             </div>
                             <div class="txt_bottom">
                                 <h4>护照首页彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -79,9 +80,9 @@
                         </div>
                         <div v-show="typeMsg == 1581">
                             <div class="img_top">
-                            <img src="@/assets/image/huzhao_1.png" @click="lookClick('huzhao_1.png')" alt="护照首页">
-                            <img src="@/assets/image/huzhao_2.png" @click="lookClick('huzhao_2.png')" alt="护照内容页">
-                            <img src="@/assets/image/huzhao_3.png" @click="lookClick('huzhao_3.png')" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_1.jpg" @click="lookClick('huzhao_1.jpg')" alt="护照首页">
+                            <img src="@/assets/image/huzhao_2.jpg" @click="lookClick('huzhao_2.jpg')" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_3.jpg" @click="lookClick('huzhao_3.jpg')" alt="护照内容页">
                             </div>
                             <div class="txt_bottom">
                             <h4>护照整本彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -94,9 +95,9 @@
                         </div>
                         <div v-show="typeMsg == 1583">
                             <div class="img_top">
-                            <img src="@/assets/image/huzhao_1.png" @click="lookClick('huzhao_1.png')" alt="护照首页">
-                            <img src="@/assets/image/huzhao_2.png" @click="lookClick('huzhao_2.png')" alt="护照内容页">
-                            <img src="@/assets/image/huzhao_3.png" @click="lookClick('huzhao_3.png')" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_1.jpg" @click="lookClick('huzhao_1.jpg')" alt="护照首页">
+                            <img src="@/assets/image/huzhao_2.jpg" @click="lookClick('huzhao_2.jpg')" alt="护照内容页">
+                            <img src="@/assets/image/huzhao_3.jpg" @click="lookClick('huzhao_3.jpg')" alt="护照内容页">
                             </div>
                             <div class="txt_bottom">
                             <h4>旧护照彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -106,7 +107,7 @@
                         </div>
                         <div v-show="typeMsg == 1505">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/id_card.png" @click="lookClick('id_card.png')" alt="彩色身份证">
+                            <img src="@/assets/image/id_card.jpg" @click="lookClick('id_card.jpg')" alt="彩色身份证">
                             </div>
                             <div class="txt_bottom">
                             <h4>身份证正反面彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -115,9 +116,9 @@
                         </div>
                         <div v-show="typeMsg == 1588">
                             <div class="img_top">
-                            <img src="@/assets/image/hukouben_1.png" @click="lookClick('hukouben_1.png')" alt="户口本户主首页">
-                            <img src="@/assets/image/hukouben_2.png" @click="lookClick('hukouben_2.png')" alt="户口本户主信息">
-                            <img src="@/assets/image/hukouben_3.png" @click="lookClick('hukouben_3.png')" alt="户口本家庭成员">
+                            <img src="@/assets/image/hukouben_1.jpg" @click="lookClick('hukouben_1.jpg')" alt="户口本户主首页">
+                            <img src="@/assets/image/hukouben_2.jpg" @click="lookClick('hukouben_2.jpg')" alt="户口本户主信息">
+                            <img src="@/assets/image/hukouben_3.jpg" @click="lookClick('hukouben_3.jpg')" alt="户口本家庭成员">
                             </div>
                             <div class="txt_bottom">
                             <h4>户口本整本彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -127,7 +128,7 @@
                         </div>
                         <div v-show="typeMsg == 1591">
                             <div class="img_top img_only">
-                            <img src="@/assets/image/money.png" @click="lookClick('money.png')" alt="财力证明">
+                            <img src="@/assets/image/money.jpg" @click="lookClick('money.jpg')" alt="财力证明">
                             </div>
                             <div class="txt_bottom">
                             <h4>财力证明彩色扫描件--<span class="span_red">PDF文档</span>：</h4>
@@ -160,7 +161,7 @@
                         </div>
                         <div v-show="typeMsg == 1706">
                             <div class="img_top" style="justify-content:center">
-                            <img src="@/assets/image/id_card.png" @click="lookClick('id_card.png')" alt="父母身份证">
+                            <img src="@/assets/image/id_card.jpg" @click="lookClick('id_card.jpg')" alt="父母身份证">
                             <img src="@/assets/image/lihun_card.jpg" @click="lookClick('lihun_card.jpg')" alt="结婚证">
                             <img src="@/assets/image/chusheng_card.jpg" @click="lookClick('chusheng_card.jpg')" alt="出生证明">
                             </div>
@@ -209,9 +210,10 @@
                             </div>
                             <div class="txt_bottom">
                                 <h4>在读证明彩色扫描件----<span class="span_red">PDF文档</span>（<span class="span_red">仅限在校学生额外提供</span>）：</h4>
-                                <p >1）请
-                                    <!-- <a v-if="isIOS" href="#" @click="downloadPdf(studyWordUrl,'在读证明模版')" class="down_style">下载</a>  -->
-                                    <a :href="studyWordUrl" class="down_style" download="在读证明模版.docx">下载</a>在读证明模版并按要求提供，需使用学校抬头纸打印，抬头纸包括学校名称、地址、电话和传真；
+                                <p >1）请<a :href="studyWordUrl" class="down_style" download="在读证明模版.docx">下载</a>
+                                    <!-- <a v-if="isIOS" href="#" @click="downloadPdf(studyWordUrl,'在读证明模版')" class="down_style">下载</a> 
+                                    <a v-else :href="studyWordUrl" class="down_style" download="在读证明模版.docx">下载</a> -->
+                                    在读证明模版并按要求提供，需使用学校抬头纸打印，抬头纸包括学校名称、地址、电话和传真；
                                 </p>
                                 <p>2）签名处为班主任或其他老师亲笔签名，并加盖学校公章，电话为签字人电话需可以联系到。</p>
                             </div>
@@ -300,9 +302,12 @@ const getList = () => {
 // let wordUrl = window.location.origin+'/Amway2025MEL/doc/不随行父母同意函.docx'
 // let studyWordUrl = window.location.origin+'/Amway2025MEL/doc/在读证明模版.docx'
 // 正式
-let wordUrl = window.location.origin+'/doc/不随行父母同意函.docx'
-let studyWordUrl = window.location.origin+'/doc/在读证明模版.docx'
+let wordUrl = 'https://mice-amway2025mel-oss.mmice.com.cn/doc/NoParent.docx'
+let studyWordUrl = 'https://mice-amway2025mel-oss.mmice.com.cn/doc/ReadingProof.docx'
 // const downloadPdf = (url:string, tagFileName:string) => {
+//     const toast1 = showLoadingToast({
+//         forbidClick: true,
+//         });
 //         const xhr = new XMLHttpRequest();
 //         xhr.open('GET', url, true);
 //         xhr.responseType = 'blob';
@@ -313,6 +318,7 @@ let studyWordUrl = window.location.origin+'/doc/在读证明模版.docx'
 //             link.href = window.URL.createObjectURL(blob);
 //             link.download = tagFileName+'.docx'; // 下载的文件名
 //             link.click();
+//             toast1.close()
 //           }
 //         };
 //         xhr.send();
@@ -452,6 +458,10 @@ const lookClick = (name:string) => {
     }
   }
   .txt_bottom {
+    position: fixed;
+    padding: 16px 0;
+    bottom: 60px;
+    background: #fff;
     h4 {
       color: #333;
     }
@@ -470,7 +480,11 @@ const lookClick = (name:string) => {
     color: #ef2d2d !important;
   }
   .flex_btn {
-    margin-top: 20px;
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    padding-bottom: 20px;
+    // margin-top: 20px;
     .btn {
         width: 390px;
     }

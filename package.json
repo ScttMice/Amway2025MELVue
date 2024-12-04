@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
-    
   },
   "dependencies": {
     "@vant/area-data": "^1.4.1",
@@ -20,7 +19,8 @@
     "vant": "^4.3.1",
     "vue": "^3.2.47",
     "vue-router": "^4.2.0",
-    "vue-tsc": "^2.0.26"
+    "vue-tsc": "^2.0.26",
+    "vue3-esign": "^1.0.6"
   },
   "devDependencies": {
     "@types/nprogress": "^0.2.3",
