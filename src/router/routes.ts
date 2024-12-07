@@ -53,7 +53,7 @@ export const routes: RouteRecordRaw[] = [
     path: '/person',
     component: () => import('@/views/person/index.vue'),
     meta: {
-      title: '',
+      title: '澳大利亚签证信息表-签证办理',
       keepAlive: false,
       auth: true
     },

@@ -26,6 +26,13 @@ router.beforeEach((to: toRouteType, from, next) => {
   NProgress.start();
   const token = getLocalStorage('anliMelToken');
   let auth = to.meta.auth
+
+  // const title = to.meta.title;
+  // if (title && title.trim() !== '') {
+  //   document.title = title;
+  // }
+
+
   if (auth) { // 需要登录
     if (token) {
       document.body.scrollTop = 0

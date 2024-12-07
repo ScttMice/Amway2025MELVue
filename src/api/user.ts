@@ -24,10 +24,10 @@ export type person = {
  * @method uploadFile //上传文件
  * @method uploadImg //签字
  */
-export function loginPassword(data:LoginData) {
+export function loginPassword(data: LoginData) {
   return http.post('/auth/phoneCode', data);
 }
-export function loginPhone(data:LoginData) {
+export function loginPhone(data: LoginData) {
   return http.post('/auth/loginPhone', data);
 }
 export function putStatement() {
@@ -36,15 +36,15 @@ export function putStatement() {
 export function getPersonList() {
   return http.get('/passenger');
 }
-export function addPerson(data:person) {
+export function addPerson(data: person) {
   return http.post('/passenger', data);
 }
-export function getVisa(trid:number) {
+export function getVisa(trid: number) {
   return http.get(`/visa/${trid}`);
 }
-export function uploadFile(data:any) {
-  return http.post('/visa', data,{headers:{"Content-Type":"multipart/form-data;charset=UTF-8"}});
+export function uploadFile(data: any) {
+  return http.post('/visa', data, { headers: { "Content-Type": "multipart/form-data;charset=UTF-8" } });
 }
-export function uploadImg(data:any) {
+export function uploadImg(data: any) {
   return http.post('/sign/uploadVisaFile', data);
 }

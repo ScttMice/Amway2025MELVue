@@ -1,6 +1,6 @@
 <template>
   <div class="login flex  flex-column space-between home text-center">
-    <div>
+    <div style="height: inherit;">
       <header class="header">
         <img alt="" src="@/assets/image/logo.png" />
       </header>
@@ -31,6 +31,10 @@
       </van-form>
 
       <div class="login-tips mg-r-l-24 ">
+        <div class="login-tips-item flex">
+          <label style="flex-shrink: 0;">手机号码：</label>
+          <p style="text-align: left;">请输入“安利带你看世界”系统报名时填写的手机号码</p>
+        </div>
         <!-- <div class="login-tips-item flex align-middle text-left">
           <label>开放时间：</label>
           <p class="flex-1">2024年9月30日至12月30日</p>
@@ -41,14 +45,14 @@
         </div>
         <div class="login-tips-item flex text-left">
           <label style="flex-shrink: 0;">服务时间：</label>
-          <div >
+          <div>
             <div class="flex">周一至周五：
-            <div>
-              <p>上午09:30-12:30 </p>
-              <p>下午13:30-18:30</p>
+              <div>
+                <p>上午09:30-12:30 </p>
+                <p>下午13:30-18:30</p>
+              </div>
             </div>
-          </div>
-          <p >周六、周日及节假日休息</p>  
+            <p>周六、周日及节假日休息</p>
           </div>
         </div>
       </div>
@@ -134,12 +138,12 @@ const onSubmit = async () => {
 
 <style scoped lang="less">
 .login {
-  // padding: 20px;
   height: 100%;
 
   .header {
     padding: 70px 24px;
     text-align: center;
+
     img {
       width: 100%;
     }
